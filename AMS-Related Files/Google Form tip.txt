@@ -1,0 +1,2 @@
+One last tip — getting form responses:
+In Google Forms, click the Responses tab at the top of your form editor. You'll see all submissions there. You can also click the Google Sheets icon to send responses automatically to a spreadsheet — great for the board to track inquiries!
