@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visit — Anchorage Makerspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .visit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem; align-items: start;
+      margin-top: 2.5rem;
+    }
+
+    .visit-map {
+      background: var(--mid); border-radius: 8px;
+      height: 340px; overflow: hidden;
+      border: 1px solid var(--steel);
+    }
+
+    .visit-map iframe {
+      width: 100%; height: 100%; border: 0;
+      filter: invert(0.88) hue-rotate(180deg) contrast(0.85);
+    }
+
+    .visit-details { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .visit-item { display: flex; gap: 1rem; align-items: flex-start; }
+
+    .visit-icon {
+      width: 42px; height: 42px; border-radius: 8px; flex-shrink: 0;
+      background: rgba(46,204,90,0.12);
+      border: 1px solid rgba(46,204,90,0.25);
+      display: flex; align-items: center;
+      justify-content: center; font-size: 18px;
+      margin-top: 2px;
+    }
+
+    .visit-label {
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); font-weight: 600; margin-bottom: 4px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .visit-value { font-size: 16px; color: var(--white); font-weight: 500; }
+    .visit-value a { color: var(--green); text-decoration: none; }
+    .visit-value a:hover { text-decoration: underline; }
+    .visit-sub { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+    /* Connect strip */
+    .connect-strip {
+      background: rgba(26,26,26,0.92);
+      border-top: 1px solid var(--steel);
+      border-bottom: 1px solid var(--steel);
+      padding: 2.5rem 2rem;
+    }
+
+    .connect-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap;
+    }
+
+    .connect-inner h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px; font-weight: 800; text-transform: uppercase;
+    }
+
+    .connect-inner p { font-size: 15px; color: var(--muted); margin-top: 4px; }
+
+    .connect-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .connect-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 6px;
+      font-weight: 600; font-size: 13px;
+      text-decoration: none; letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--steel); color: var(--text);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .connect-link:hover { border-color: var(--green); color: var(--green); }
+
+    /* Open house callout */
+    .oh-callout {
+      background: var(--mid);
+      border: 1px solid rgba(46,204,90,0.35);
+      border-left: 4px solid var(--green);
+      border-radius: 8px; padding: 1.75rem 2rem;
+      margin-top: 2rem;
+      display: flex; align-items: center;
+      gap: 1.5rem; flex-wrap: wrap;
+    }
+
+    .oh-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #4CAF50;
+      box-shadow: 0 0 8px rgba(76,175,80,0.8);
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .oh-text h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 800; text-transform: uppercase;
+    }
+
+    .oh-text p { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+    @media (max-width: 768px) {
+      .visit-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace Logo"
+      style="height:58px; width:auto; filter: drop-shadow(0 0 6px rgba(46,204,90,0.4));">
+  </a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+
+  <div class="page-hero" style="position:relative;">
+    <div class="page-hero-inner">
+      <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace" style="position:absolute; top:1.25rem; right:2rem; height:225px; width:auto; opacity:0.82; filter:drop-shadow(0 0 14px rgba(46,204,90,0.45)); pointer-events:none; z-index:1;">
+      <div class="section-label">Find Us</div>
+      <h1>Come <em>Visit</em></h1>
+      <p>Drop in for Open House any Monday evening — no appointment, no commitment. Just show up and see what we're about.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-inner">
+
+      <div class="visit-grid">
+        <div class="visit-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2261.8!2d-149.92!3d61.18!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x56c899a0ecebc4b9%3A0x8be15a35d7f4be80!2s1406%20W%2033rd%20Ave%2C%20Anchorage%2C%20AK%2099503!5e0!3m2!1sen!2sus!4v1700000000000"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+        <div class="visit-details">
+          <div class="visit-item">
+            <div class="visit-icon">📍</div>
+            <div>
+              <div class="visit-label">Address</div>
+              <div class="visit-value">1406 West 33rd Ave, Unit F<br>Anchorage, AK 99503</div>
+            </div>
+          </div>
+
+          <div class="visit-item">
+            <div class="visit-icon">🕐</div>
+            <div>
+              <div class="visit-label">Open House</div>
+              <div class="visit-value">Every Monday · 6:00–8:00 pm</div>
+              <div class="visit-sub">Free · No appointment needed · Just show up!</div>
+            </div>
+          </div>
+
+          <div class="visit-item">
+            <div class="visit-icon">🔑</div>
+            <div>
+              <div class="visit-label">Member Access</div>
+              <div class="visit-value">24/7 keycard access</div>
+              <div class="visit-sub">All members can access the full shop any time</div>
+            </div>
+          </div>
+
+          <div class="visit-item">
+            <div class="visit-icon">✉️</div>
+            <div>
+              <div class="visit-label">Email</div>
+              <div class="visit-value">
+                <a href="mailto:info@anchoragemakerspace.com">info@anchoragemakerspace.com</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="visit-item">
+            <div class="visit-icon">📞</div>
+            <div>
+              <div class="visit-label">Connect Online</div>
+              <div class="visit-value">
+                <a href="https://www.facebook.com/AnchorageMakerSpace/">Facebook</a> &nbsp;·&nbsp;
+                <a href="https://www.anchoragemakerspace.com/slack/">Slack Community</a> &nbsp;·&nbsp;
+                <a href="http://groupspaces.com/AnchorageMakerSpace/external/subscribe">Mailing List</a>
+              </div>
+            </div>
+          </div>
+
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpmrlWpvJn-Cp8EmDsYAiGsEYqN5uuUPt3vXTJuKiE1dn36w/viewform"
+             class="btn-primary" style="width:fit-content;">
+            Become a Member →
+          </a>
+        </div>
+      </div>
+
+      <!-- Open House callout -->
+      <div class="oh-callout">
+        <div class="oh-dot"></div>
+        <div class="oh-text">
+          <h3>Open House — Every Monday 6–8pm</h3>
+          <p>The best way to experience the Makerspace is to visit. Meet the members, try the equipment, ask questions. No sign-up, no fee, no pressure.</p>
+        </div>
+        <a href="membership.html" class="btn-secondary">Ready to Join? →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Connect strip -->
+  <div class="connect-strip">
+    <div class="connect-inner">
+      <div>
+        <h3>Stay Connected</h3>
+        <p>Join our community online and stay in the loop on events, classes & news</p>
+      </div>
+      <div class="connect-links">
+        <a href="mailto:info@anchoragemakerspace.com" class="connect-link">✉️ Email Us</a>
+        <a href="https://www.facebook.com/AnchorageMakerSpace/" class="connect-link">📘 Facebook</a>
+        <a href="https://www.anchoragemakerspace.com/slack/" class="connect-link">💬 Slack</a>
+        <a href="http://groupspaces.com/AnchorageMakerSpace/external/subscribe" class="connect-link">📋 Mailing List</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 Anchorage Makerspace · Community Research and Development Workspace</p>
+  <p style="margin-top:6px;">1406 W 33rd Ave Unit F, Anchorage AK 99503 · <a href="mailto:info@anchoragemakerspace.com">info@anchoragemakerspace.com</a></p>
+  <p style="margin-top:6px;">
+    <a href="visit.html">Visit</a> · <a href="membership.html">Join</a> · <a href="livestream.html">Live Cam</a> · <a href="contact-member.html">Contact</a> · <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+</body>
+</html>

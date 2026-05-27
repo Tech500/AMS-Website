@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Events & Classes — Anchorage Makerspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <style>
+    /* ── Page Hero ── */
+    .page-hero {
+      padding: 120px 8vw 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(46,204,90,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .page-hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(46,204,90,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46,204,90,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .page-hero-inner {
+      position: relative; z-index: 2;
+      max-width: 900px;
+    }
+
+    .page-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 1.2rem;
+    }
+
+    .page-eyebrow::before {
+      content: '';
+      display: inline-block; width: 24px; height: 1px;
+      background: var(--green);
+    }
+
+    .page-hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 800; line-height: 0.95;
+      text-transform: uppercase; letter-spacing: -0.01em;
+      margin-bottom: 1.2rem;
+    }
+
+    .page-hero h1 em { color: var(--green); font-style: normal; }
+
+    .page-hero-desc {
+      font-size: 17px; color: var(--muted);
+      line-height: 1.7; max-width: 540px;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Info Strip ── */
+    .info-strip {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 0;
+    }
+
+    .info-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(46,204,90,0.08);
+      border: 1px solid rgba(46,204,90,0.25);
+      border-radius: 4px; padding: 8px 16px;
+      font-size: 13px; color: var(--text);
+      font-family: 'Share Tech Mono', monospace;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .info-pill:hover {
+      border-color: var(--green);
+      background: rgba(46,204,90,0.15);
+      color: var(--green);
+    }
+
+    .info-pill-icon { font-size: 15px; }
+
+    /* ── Calendar Section ── */
+    .calendar-section {
+      padding: 0 8vw 5rem;
+    }
+
+    .calendar-wrap {
+      background: var(--mid);
+      border: 1px solid var(--steel);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .calendar-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--steel);
+      background: rgba(46,204,90,0.04);
+    }
+
+    .calendar-header-left {
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .cal-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px rgba(46,204,90,0.7);
+    }
+
+    .cal-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--green);
+    }
+
+    .cal-timezone {
+      font-size: 11px; color: var(--muted);
+      font-family: 'Share Tech Mono', monospace;
+      letter-spacing: 0.08em;
+    }
+
+    .calendar-wrap iframe {
+      display: block; width: 100%;
+      min-height: 620px;
+      border: none;
+      /* Invert to match dark theme */
+      filter: invert(0.92) hue-rotate(175deg) saturate(0.9) brightness(0.92);
+    }
+
+    /* ── Subscribe + Contact ── */
+    .connect-section {
+      padding: 0 8vw 5rem;
+    }
+
+    .connect-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .connect-card {
+      background: var(--mid);
+      border: 1px solid var(--steel);
+      border-radius: 10px;
+      padding: 2rem;
+      transition: border-color 0.2s;
+    }
+
+    .connect-card:hover { border-color: var(--green); }
+
+    .connect-card-icon {
+      font-size: 32px; margin-bottom: 1rem; display: block;
+    }
+
+    .connect-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 800; text-transform: uppercase;
+      margin-bottom: 0.5rem; color: var(--white);
+    }
+
+    .connect-card p {
+      font-size: 14px; color: var(--muted); line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .connect-card a.btn-sm {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(46,204,90,0.12);
+      border: 1px solid rgba(46,204,90,0.4);
+      border-radius: 4px; padding: 8px 16px;
+      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--green); text-decoration: none; font-weight: 600;
+      font-family: 'Share Tech Mono', monospace;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .connect-card a.btn-sm:hover {
+      background: rgba(46,204,90,0.22);
+      border-color: var(--green);
+    }
+
+    .connect-card .mailto-copy {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px; color: var(--green);
+      background: rgba(46,204,90,0.08);
+      border: 1px solid rgba(46,204,90,0.2);
+      border-radius: 4px; padding: 6px 12px;
+      display: inline-block; margin-top: 0.5rem;
+      cursor: pointer; user-select: all;
+      transition: background 0.2s;
+    }
+
+    .connect-card .mailto-copy:hover { background: rgba(46,204,90,0.18); }
+
+    
+
+    /* ── Open House Banner ── */
+    .open-banner {
+      margin: 0 8vw 3rem;
+      background: rgba(46,204,90,0.08);
+      border: 1px solid rgba(46,204,90,0.3);
+      border-radius: 8px;
+      padding: 1.25rem 2rem;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+
+    .open-banner p {
+      font-size: 15px; color: var(--text); margin: 0;
+    }
+
+    .open-banner a {
+      color: var(--green); text-decoration: none;
+      font-size: 13px; font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .open-banner a:hover { text-decoration: underline; }
+
+
+    /* ── QR Block ── */
+    .qr-block {
+      display: flex; align-items: flex-start; gap: 1.25rem;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--steel);
+    }
+
+    .qr-wrap {
+      flex-shrink: 0;
+      background: #ffffff;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 8px;
+      line-height: 0;
+    }
+
+    .qr-meta { flex: 1; }
+
+    .qr-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 0.4rem !important;
+    }
+
+    .qr-hint {
+      font-size: 12px; color: var(--muted);
+      line-height: 1.55; margin-bottom: 0.75rem !important;
+    }
+
+    @media (max-width: 768px) {
+      .page-hero { padding: 100px 1.5rem 40px; }
+      .calendar-section,
+      .connect-section,
+
+      .open-banner { margin: 0 1.5rem 3rem; }
+      .calendar-wrap iframe { min-height: 480px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace Logo"
+      style="height:58px; width:auto; filter: drop-shadow(0 0 6px rgba(46,204,90,0.4));">
+  </a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">Events &amp; Classes</div>
+      <h1>What's<br><em>Happening</em></h1>
+      <p class="page-hero-desc">
+        Classes, workshops, open houses, and community gatherings — all in Alaska Time (AKST/AKDT).
+        Something's always going on at AMS.
+      </p>
+      <div class="info-strip">
+        <a href="https://calendar.google.com/calendar/embed?src=iu139o42bup6muk3l2ta0vjsjo%40group.calendar.google.com&ctz=America%2FAnchorage"
+           target="_blank" class="info-pill">
+          <span class="info-pill-icon">📅</span> Subscribe to Calendar
+        </a>
+        <a href="visit.html" class="info-pill">
+          <span class="info-pill-icon">🔓</span> Open House — Mon 6–8pm
+        </a>
+        <a href="mailto:info@anchoragemakerspace.com" class="info-pill">
+          <span class="info-pill-icon">✉️</span> info@anchoragemakerspace.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open House reminder -->
+  <div class="open-banner">
+    <p>🔓 <strong>Open House Every Monday 6–8pm</strong> — No appointment needed. Come see the space, meet members, and try the tools.</p>
+    <a href="visit.html">Get directions →</a>
+  </div>
+
+  <!-- Google Calendar embed -->
+  <section class="calendar-section">
+    <div class="calendar-wrap">
+      <div class="calendar-header">
+        <div class="calendar-header-left">
+          <div class="cal-dot"></div>
+          <span class="cal-label">AMS Live Calendar</span>
+        </div>
+        <span class="cal-timezone">Alaska Time (AKST / AKDT)</span>
+      </div>
+      <iframe
+        src="https://calendar.google.com/calendar/embed?src=iu139o42bup6muk3l2ta0vjsjo%40group.calendar.google.com&ctz=America%2FAnchorage&showTitle=0&showNav=1&showPrint=0&showTabs=1&showCalendars=0&showTz=1&mode=MONTH"
+        title="Anchorage Makerspace Event Calendar"
+        frameborder="0"
+        scrolling="no"
+        loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- Connect cards -->
+  <section class="connect-section">
+    <div class="connect-grid">
+
+      <div class="connect-card">
+        <span class="connect-card-icon">🗓️</span>
+        <h3>Add to Your Calendar</h3>
+        <p>Subscribe once and stay current — AMS events will appear automatically in Google Calendar, Apple Calendar, or any app that supports ICS feeds.</p>
+        <a class="btn-sm"
+           href="https://calendar.google.com/calendar/embed?src=iu139o42bup6muk3l2ta0vjsjo%40group.calendar.google.com&ctz=America%2FAnchorage"
+           target="_blank" rel="noopener">
+          Subscribe via Google →
+        </a>
+        <br><br>
+        <div class="qr-block">
+          <div class="qr-wrap">
+            <svg width="112" height="112" style="display:block;border-radius:4px;" version="1.1" viewBox="0 0 39.2 39.2" xmlns="http://www.w3.org/2000/svg"><rect width="39.2" height="39.2" fill="#ffffff" rx="0.5"/><path fill="#000000" d="M1.6,1.6H2.4V2.4H1.6zM2.4,1.6H3.2V2.4H2.4zM3.2,1.6H4V2.4H3.2zM4,1.6H4.8V2.4H4zM4.8,1.6H5.6V2.4H4.8zM5.6,1.6H6.4V2.4H5.6zM6.4,1.6H7.2V2.4H6.4zM8,1.6H8.8V2.4H8zM8.8,1.6H9.6V2.4H8.8zM10.4,1.6H11.2V2.4H10.4zM12,1.6H12.8V2.4H12zM12.8,1.6H13.6V2.4H12.8zM15.2,1.6H16V2.4H15.2zM19.2,1.6H20V2.4H19.2zM21.6,1.6H22.4V2.4H21.6zM24.8,1.6H25.6V2.4H24.8zM25.6,1.6H26.4V2.4H25.6zM28,1.6H28.8V2.4H28zM30.4,1.6H31.2V2.4H30.4zM32,1.6H32.8V2.4H32zM32.8,1.6H33.6V2.4H32.8zM33.6,1.6H34.4V2.4H33.6zM34.4,1.6H35.2V2.4H34.4zM35.2,1.6H36V2.4H35.2zM36,1.6H36.8V2.4H36zM36.8,1.6H37.6V2.4H36.8zM1.6,2.4H2.4V3.2H1.6zM6.4,2.4H7.2V3.2H6.4zM8,2.4H8.8V3.2H8zM8.8,2.4H9.6V3.2H8.8zM12,2.4H12.8V3.2H12zM14.4,2.4H15.2V3.2H14.4zM17.6,2.4H18.4V3.2H17.6zM18.4,2.4H19.2V3.2H18.4zM23.2,2.4H24V3.2H23.2zM24.8,2.4H25.6V3.2H24.8zM25.6,2.4H26.4V3.2H25.6zM26.4,2.4H27.2V3.2H26.4zM27.2,2.4H28V3.2H27.2zM29.6,2.4H30.4V3.2H29.6zM32,2.4H32.8V3.2H32zM36.8,2.4H37.6V3.2H36.8zM1.6,3.2H2.4V4H1.6zM3.2,3.2H4V4H3.2zM4,3.2H4.8V4H4zM4.8,3.2H5.6V4H4.8zM6.4,3.2H7.2V4H6.4zM8.8,3.2H9.6V4H8.8zM10.4,3.2H11.2V4H10.4zM11.2,3.2H12V4H11.2zM12,3.2H12.8V4H12zM13.6,3.2H14.4V4H13.6zM15.2,3.2H16V4H15.2zM16,3.2H16.8V4H16zM17.6,3.2H18.4V4H17.6zM18.4,3.2H19.2V4H18.4zM19.2,3.2H20V4H19.2zM20.8,3.2H21.6V4H20.8zM21.6,3.2H22.4V4H21.6zM27.2,3.2H28V4H27.2zM29.6,3.2H30.4V4H29.6zM32,3.2H32.8V4H32zM33.6,3.2H34.4V4H33.6zM34.4,3.2H35.2V4H34.4zM35.2,3.2H36V4H35.2zM36.8,3.2H37.6V4H36.8zM1.6,4H2.4V4.8H1.6zM3.2,4H4V4.8H3.2zM4,4H4.8V4.8H4zM4.8,4H5.6V4.8H4.8zM6.4,4H7.2V4.8H6.4zM8,4H8.8V4.8H8zM8.8,4H9.6V4.8H8.8zM10.4,4H11.2V4.8H10.4zM11.2,4H12V4.8H11.2zM12,4H12.8V4.8H12zM12.8,4H13.6V4.8H12.8zM15.2,4H16V4.8H15.2zM16,4H16.8V4.8H16zM17.6,4H18.4V4.8H17.6zM19.2,4H20V4.8H19.2zM20,4H20.8V4.8H20zM21.6,4H22.4V4.8H21.6zM22.4,4H23.2V4.8H22.4zM24.8,4H25.6V4.8H24.8zM25.6,4H26.4V4.8H25.6zM26.4,4H27.2V4.8H26.4zM29.6,4H30.4V4.8H29.6zM30.4,4H31.2V4.8H30.4zM32,4H32.8V4.8H32zM33.6,4H34.4V4.8H33.6zM34.4,4H35.2V4.8H34.4zM35.2,4H36V4.8H35.2zM36.8,4H37.6V4.8H36.8zM1.6,4.8H2.4V5.6H1.6zM3.2,4.8H4V5.6H3.2zM4,4.8H4.8V5.6H4zM4.8,4.8H5.6V5.6H4.8zM6.4,4.8H7.2V5.6H6.4zM11.2,4.8H12V5.6H11.2zM12,4.8H12.8V5.6H12zM13.6,4.8H14.4V5.6H13.6zM15.2,4.8H16V5.6H15.2zM16,4.8H16.8V5.6H16zM16.8,4.8H17.6V5.6H16.8zM17.6,4.8H18.4V5.6H17.6zM18.4,4.8H19.2V5.6H18.4zM19.2,4.8H20V5.6H19.2zM20,4.8H20.8V5.6H20zM20.8,4.8H21.6V5.6H20.8zM21.6,4.8H22.4V5.6H21.6zM22.4,4.8H23.2V5.6H22.4zM24,4.8H24.8V5.6H24zM24.8,4.8H25.6V5.6H24.8zM26.4,4.8H27.2V5.6H26.4zM27.2,4.8H28V5.6H27.2zM28,4.8H28.8V5.6H28zM28.8,4.8H29.6V5.6H28.8zM29.6,4.8H30.4V5.6H29.6zM30.4,4.8H31.2V5.6H30.4zM32,4.8H32.8V5.6H32zM33.6,4.8H34.4V5.6H33.6zM34.4,4.8H35.2V5.6H34.4zM35.2,4.8H36V5.6H35.2zM36.8,4.8H37.6V5.6H36.8zM1.6,5.6H2.4V6.4H1.6zM6.4,5.6H7.2V6.4H6.4zM8.8,5.6H9.6V6.4H8.8zM9.6,5.6H10.4V6.4H9.6zM10.4,5.6H11.2V6.4H10.4zM11.2,5.6H12V6.4H11.2zM12,5.6H12.8V6.4H12zM14.4,5.6H15.2V6.4H14.4zM16.8,5.6H17.6V6.4H16.8zM17.6,5.6H18.4V6.4H17.6zM20.8,5.6H21.6V6.4H20.8zM22.4,5.6H23.2V6.4H22.4zM24,5.6H24.8V6.4H24zM24.8,5.6H25.6V6.4H24.8zM25.6,5.6H26.4V6.4H25.6zM26.4,5.6H27.2V6.4H26.4zM32,5.6H32.8V6.4H32zM36.8,5.6H37.6V6.4H36.8zM1.6,6.4H2.4V7.2H1.6zM2.4,6.4H3.2V7.2H2.4zM3.2,6.4H4V7.2H3.2zM4,6.4H4.8V7.2H4zM4.8,6.4H5.6V7.2H4.8zM5.6,6.4H6.4V7.2H5.6zM6.4,6.4H7.2V7.2H6.4zM8,6.4H8.8V7.2H8zM9.6,6.4H10.4V7.2H9.6zM11.2,6.4H12V7.2H11.2zM12.8,6.4H13.6V7.2H12.8zM14.4,6.4H15.2V7.2H14.4zM16,6.4H16.8V7.2H16zM17.6,6.4H18.4V7.2H17.6zM19.2,6.4H20V7.2H19.2zM20.8,6.4H21.6V7.2H20.8zM22.4,6.4H23.2V7.2H22.4zM24,6.4H24.8V7.2H24zM25.6,6.4H26.4V7.2H25.6zM27.2,6.4H28V7.2H27.2zM28.8,6.4H29.6V7.2H28.8zM30.4,6.4H31.2V7.2H30.4zM32,6.4H32.8V7.2H32zM32.8,6.4H33.6V7.2H32.8zM33.6,6.4H34.4V7.2H33.6zM34.4,6.4H35.2V7.2H34.4zM35.2,6.4H36V7.2H35.2zM36,6.4H36.8V7.2H36zM36.8,6.4H37.6V7.2H36.8zM8,7.2H8.8V8H8zM16.8,7.2H17.6V8H16.8zM17.6,7.2H18.4V8H17.6zM20.8,7.2H21.6V8H20.8zM21.6,7.2H22.4V8H21.6zM24,7.2H24.8V8H24zM24.8,7.2H25.6V8H24.8zM26.4,7.2H27.2V8H26.4zM30.4,7.2H31.2V8H30.4zM1.6,8H2.4V8.8H1.6zM3.2,8H4V8.8H3.2zM4,8H4.8V8.8H4zM5.6,8H6.4V8.8H5.6zM6.4,8H7.2V8.8H6.4zM7.2,8H8V8.8H7.2zM12,8H12.8V8.8H12zM12.8,8H13.6V8.8H12.8zM14.4,8H15.2V8.8H14.4zM17.6,8H18.4V8.8H17.6zM18.4,8H19.2V8.8H18.4zM19.2,8H20V8.8H19.2zM20,8H20.8V8.8H20zM20.8,8H21.6V8.8H20.8zM22.4,8H23.2V8.8H22.4zM23.2,8H24V8.8H23.2zM24,8H24.8V8.8H24zM28,8H28.8V8.8H28zM29.6,8H30.4V8.8H29.6zM30.4,8H31.2V8.8H30.4zM32,8H32.8V8.8H32zM34.4,8H35.2V8.8H34.4zM36,8H36.8V8.8H36zM36.8,8H37.6V8.8H36.8zM4.8,8.8H5.6V9.6H4.8zM13.6,8.8H14.4V9.6H13.6zM14.4,8.8H15.2V9.6H14.4zM15.2,8.8H16V9.6H15.2zM16,8.8H16.8V9.6H16zM16.8,8.8H17.6V9.6H16.8zM17.6,8.8H18.4V9.6H17.6zM19.2,8.8H20V9.6H19.2zM20.8,8.8H21.6V9.6H20.8zM21.6,8.8H22.4V9.6H21.6zM24,8.8H24.8V9.6H24zM25.6,8.8H26.4V9.6H25.6zM26.4,8.8H27.2V9.6H26.4zM30.4,8.8H31.2V9.6H30.4zM33.6,8.8H34.4V9.6H33.6zM34.4,8.8H35.2V9.6H34.4zM35.2,8.8H36V9.6H35.2zM36,8.8H36.8V9.6H36zM36.8,8.8H37.6V9.6H36.8zM2.4,9.6H3.2V10.4H2.4zM3.2,9.6H4V10.4H3.2zM4,9.6H4.8V10.4H4zM4.8,9.6H5.6V10.4H4.8zM6.4,9.6H7.2V10.4H6.4zM7.2,9.6H8V10.4H7.2zM8.8,9.6H9.6V10.4H8.8zM9.6,9.6H10.4V10.4H9.6zM10.4,9.6H11.2V10.4H10.4zM12,9.6H12.8V10.4H12zM12.8,9.6H13.6V10.4H12.8zM14.4,9.6H15.2V10.4H14.4zM15.2,9.6H16V10.4H15.2zM17.6,9.6H18.4V10.4H17.6zM19.2,9.6H20V10.4H19.2zM20.8,9.6H21.6V10.4H20.8zM23.2,9.6H24V10.4H23.2zM24,9.6H24.8V10.4H24zM24.8,9.6H25.6V10.4H24.8zM25.6,9.6H26.4V10.4H25.6zM26.4,9.6H27.2V10.4H26.4zM27.2,9.6H28V10.4H27.2zM28.8,9.6H29.6V10.4H28.8zM29.6,9.6H30.4V10.4H29.6zM31.2,9.6H32V10.4H31.2zM36,9.6H36.8V10.4H36zM36.8,9.6H37.6V10.4H36.8zM1.6,10.4H2.4V11.2H1.6zM4,10.4H4.8V11.2H4zM5.6,10.4H6.4V11.2H5.6zM7.2,10.4H8V11.2H7.2zM8,10.4H8.8V11.2H8zM8.8,10.4H9.6V11.2H8.8zM10.4,10.4H11.2V11.2H10.4zM11.2,10.4H12V11.2H11.2zM12,10.4H12.8V11.2H12zM13.6,10.4H14.4V11.2H13.6zM15.2,10.4H16V11.2H15.2zM16,10.4H16.8V11.2H16zM17.6,10.4H18.4V11.2H17.6zM18.4,10.4H19.2V11.2H18.4zM19.2,10.4H20V11.2H19.2zM20.8,10.4H21.6V11.2H20.8zM21.6,10.4H22.4V11.2H21.6zM27.2,10.4H28V11.2H27.2zM28.8,10.4H29.6V11.2H28.8zM29.6,10.4H30.4V11.2H29.6zM31.2,10.4H32V11.2H31.2zM32.8,10.4H33.6V11.2H32.8zM34.4,10.4H35.2V11.2H34.4zM36,10.4H36.8V11.2H36zM1.6,11.2H2.4V12H1.6zM2.4,11.2H3.2V12H2.4zM3.2,11.2H4V12H3.2zM4,11.2H4.8V12H4zM4.8,11.2H5.6V12H4.8zM5.6,11.2H6.4V12H5.6zM6.4,11.2H7.2V12H6.4zM8,11.2H8.8V12H8zM8.8,11.2H9.6V12H8.8zM9.6,11.2H10.4V12H9.6zM11.2,11.2H12V12H11.2zM13.6,11.2H14.4V12H13.6zM15.2,11.2H16V12H15.2zM16,11.2H16.8V12H16zM17.6,11.2H18.4V12H17.6zM18.4,11.2H19.2V12H18.4zM19.2,11.2H20V12H19.2zM20,11.2H20.8V12H20zM22.4,11.2H23.2V12H22.4zM24.8,11.2H25.6V12H24.8zM32,11.2H32.8V12H32zM36.8,11.2H37.6V12H36.8zM3.2,12H4V12.8H3.2zM4.8,12H5.6V12.8H4.8zM5.6,12H6.4V12.8H5.6zM8.8,12H9.6V12.8H8.8zM9.6,12H10.4V12.8H9.6zM15.2,12H16V12.8H15.2zM16,12H16.8V12.8H16zM16.8,12H17.6V12.8H16.8zM20,12H20.8V12.8H20zM20.8,12H21.6V12.8H20.8zM21.6,12H22.4V12.8H21.6zM22.4,12H23.2V12.8H22.4zM23.2,12H24V12.8H23.2zM26.4,12H27.2V12.8H26.4zM27.2,12H28V12.8H27.2zM28,12H28.8V12.8H28zM32,12H32.8V12.8H32zM32.8,12H33.6V12.8H32.8zM33.6,12H34.4V12.8H33.6zM34.4,12H35.2V12.8H34.4zM4,12.8H4.8V13.6H4zM6.4,12.8H7.2V13.6H6.4zM7.2,12.8H8V13.6H7.2zM8.8,12.8H9.6V13.6H8.8zM12.8,12.8H13.6V13.6H12.8zM14.4,12.8H15.2V13.6H14.4zM16.8,12.8H17.6V13.6H16.8zM17.6,12.8H18.4V13.6H17.6zM18.4,12.8H19.2V13.6H18.4zM19.2,12.8H20V13.6H19.2zM22.4,12.8H23.2V13.6H22.4zM25.6,12.8H26.4V13.6H25.6zM29.6,12.8H30.4V13.6H29.6zM30.4,12.8H31.2V13.6H30.4zM31.2,12.8H32V13.6H31.2zM32,12.8H32.8V13.6H32zM32.8,12.8H33.6V13.6H32.8zM2.4,13.6H3.2V14.4H2.4zM3.2,13.6H4V14.4H3.2zM4.8,13.6H5.6V14.4H4.8zM8.8,13.6H9.6V14.4H8.8zM10.4,13.6H11.2V14.4H10.4zM11.2,13.6H12V14.4H11.2zM13.6,13.6H14.4V14.4H13.6zM14.4,13.6H15.2V14.4H14.4zM16.8,13.6H17.6V14.4H16.8zM18.4,13.6H19.2V14.4H18.4zM21.6,13.6H22.4V14.4H21.6zM22.4,13.6H23.2V14.4H22.4zM23.2,13.6H24V14.4H23.2zM24,13.6H24.8V14.4H24zM25.6,13.6H26.4V14.4H25.6zM27.2,13.6H28V14.4H27.2zM28,13.6H28.8V14.4H28zM30.4,13.6H31.2V14.4H30.4zM32,13.6H32.8V14.4H32zM32.8,13.6H33.6V14.4H32.8zM33.6,13.6H34.4V14.4H33.6zM34.4,13.6H35.2V14.4H34.4zM35.2,13.6H36V14.4H35.2zM36.8,13.6H37.6V14.4H36.8zM1.6,14.4H2.4V15.2H1.6zM2.4,14.4H3.2V15.2H2.4zM4,14.4H4.8V15.2H4zM6.4,14.4H7.2V15.2H6.4zM7.2,14.4H8V15.2H7.2zM8.8,14.4H9.6V15.2H8.8zM12.8,14.4H13.6V15.2H12.8zM13.6,14.4H14.4V15.2H13.6zM14.4,14.4H15.2V15.2H14.4zM16.8,14.4H17.6V15.2H16.8zM18.4,14.4H19.2V15.2H18.4zM20,14.4H20.8V15.2H20zM23.2,14.4H24V15.2H23.2zM26.4,14.4H27.2V15.2H26.4zM27.2,14.4H28V15.2H27.2zM29.6,14.4H30.4V15.2H29.6zM30.4,14.4H31.2V15.2H30.4zM32.8,14.4H33.6V15.2H32.8zM35.2,14.4H36V15.2H35.2zM36,14.4H36.8V15.2H36zM1.6,15.2H2.4V16H1.6zM3.2,15.2H4V16H3.2zM5.6,15.2H6.4V16H5.6zM7.2,15.2H8V16H7.2zM8,15.2H8.8V16H8zM8.8,15.2H9.6V16H8.8zM12,15.2H12.8V16H12zM12.8,15.2H13.6V16H12.8zM15.2,15.2H16V16H15.2zM16,15.2H16.8V16H16zM17.6,15.2H18.4V16H17.6zM19.2,15.2H20V16H19.2zM20.8,15.2H21.6V16H20.8zM24,15.2H24.8V16H24zM24.8,15.2H25.6V16H24.8zM26.4,15.2H27.2V16H26.4zM27.2,15.2H28V16H27.2zM28,15.2H28.8V16H28zM28.8,15.2H29.6V16H28.8zM29.6,15.2H30.4V16H29.6zM32.8,15.2H33.6V16H32.8zM36.8,15.2H37.6V16H36.8zM2.4,16H3.2V16.8H2.4zM3.2,16H4V16.8H3.2zM4.8,16H5.6V16.8H4.8zM5.6,16H6.4V16.8H5.6zM6.4,16H7.2V16.8H6.4zM8,16H8.8V16.8H8zM9.6,16H10.4V16.8H9.6zM10.4,16H11.2V16.8H10.4zM12,16H12.8V16.8H12zM13.6,16H14.4V16.8H13.6zM14.4,16H15.2V16.8H14.4zM15.2,16H16V16.8H15.2zM17.6,16H18.4V16.8H17.6zM19.2,16H20V16.8H19.2zM20,16H20.8V16.8H20zM20.8,16H21.6V16.8H20.8zM22.4,16H23.2V16.8H22.4zM24,16H24.8V16.8H24zM24.8,16H25.6V16.8H24.8zM26.4,16H27.2V16.8H26.4zM27.2,16H28V16.8H27.2zM28,16H28.8V16.8H28zM28.8,16H29.6V16.8H28.8zM29.6,16H30.4V16.8H29.6zM32,16H32.8V16.8H32zM32.8,16H33.6V16.8H32.8zM34.4,16H35.2V16.8H34.4zM1.6,16.8H2.4V17.6H1.6zM2.4,16.8H3.2V17.6H2.4zM3.2,16.8H4V17.6H3.2zM5.6,16.8H6.4V17.6H5.6zM8,16.8H8.8V17.6H8zM10.4,16.8H11.2V17.6H10.4zM11.2,16.8H12V17.6H11.2zM12,16.8H12.8V17.6H12zM13.6,16.8H14.4V17.6H13.6zM14.4,16.8H15.2V17.6H14.4zM15.2,16.8H16V17.6H15.2zM16.8,16.8H17.6V17.6H16.8zM17.6,16.8H18.4V17.6H17.6zM18.4,16.8H19.2V17.6H18.4zM20,16.8H20.8V17.6H20zM20.8,16.8H21.6V17.6H20.8zM22.4,16.8H23.2V17.6H22.4zM23.2,16.8H24V17.6H23.2zM24,16.8H24.8V17.6H24zM24.8,16.8H25.6V17.6H24.8zM28.8,16.8H29.6V17.6H28.8zM30.4,16.8H31.2V17.6H30.4zM32,16.8H32.8V17.6H32zM32.8,16.8H33.6V17.6H32.8zM33.6,16.8H34.4V17.6H33.6zM36,16.8H36.8V17.6H36zM36.8,16.8H37.6V17.6H36.8zM1.6,17.6H2.4V18.4H1.6zM4.8,17.6H5.6V18.4H4.8zM5.6,17.6H6.4V18.4H5.6zM6.4,17.6H7.2V18.4H6.4zM7.2,17.6H8V18.4H7.2zM8,17.6H8.8V18.4H8zM10.4,17.6H11.2V18.4H10.4zM11.2,17.6H12V18.4H11.2zM15.2,17.6H16V18.4H15.2zM17.6,17.6H18.4V18.4H17.6zM18.4,17.6H19.2V18.4H18.4zM19.2,17.6H20V18.4H19.2zM20,17.6H20.8V18.4H20zM20.8,17.6H21.6V18.4H20.8zM22.4,17.6H23.2V18.4H22.4zM24,17.6H24.8V18.4H24zM24.8,17.6H25.6V18.4H24.8zM25.6,17.6H26.4V18.4H25.6zM28,17.6H28.8V18.4H28zM28.8,17.6H29.6V18.4H28.8zM30.4,17.6H31.2V18.4H30.4zM31.2,17.6H32V18.4H31.2zM32,17.6H32.8V18.4H32zM32.8,17.6H33.6V18.4H32.8zM33.6,17.6H34.4V18.4H33.6zM35.2,17.6H36V18.4H35.2zM36,17.6H36.8V18.4H36zM1.6,18.4H2.4V19.2H1.6zM2.4,18.4H3.2V19.2H2.4zM4.8,18.4H5.6V19.2H4.8zM8,18.4H8.8V19.2H8zM8.8,18.4H9.6V19.2H8.8zM12.8,18.4H13.6V19.2H12.8zM13.6,18.4H14.4V19.2H13.6zM14.4,18.4H15.2V19.2H14.4zM16.8,18.4H17.6V19.2H16.8zM17.6,18.4H18.4V19.2H17.6zM20.8,18.4H21.6V19.2H20.8zM23.2,18.4H24V19.2H23.2zM25.6,18.4H26.4V19.2H25.6zM27.2,18.4H28V19.2H27.2zM29.6,18.4H30.4V19.2H29.6zM30.4,18.4H31.2V19.2H30.4zM33.6,18.4H34.4V19.2H33.6zM34.4,18.4H35.2V19.2H34.4zM35.2,18.4H36V19.2H35.2zM36.8,18.4H37.6V19.2H36.8zM1.6,19.2H2.4V20H1.6zM4,19.2H4.8V20H4zM4.8,19.2H5.6V20H4.8zM6.4,19.2H7.2V20H6.4zM8,19.2H8.8V20H8zM9.6,19.2H10.4V20H9.6zM12,19.2H12.8V20H12zM13.6,19.2H14.4V20H13.6zM14.4,19.2H15.2V20H14.4zM16,19.2H16.8V20H16zM17.6,19.2H18.4V20H17.6zM19.2,19.2H20V20H19.2zM20.8,19.2H21.6V20H20.8zM22.4,19.2H23.2V20H22.4zM23.2,19.2H24V20H23.2zM25.6,19.2H26.4V20H25.6zM27.2,19.2H28V20H27.2zM28.8,19.2H29.6V20H28.8zM30.4,19.2H31.2V20H30.4zM32,19.2H32.8V20H32zM33.6,19.2H34.4V20H33.6zM34.4,19.2H35.2V20H34.4zM36,19.2H36.8V20H36zM36.8,19.2H37.6V20H36.8zM1.6,20H2.4V20.8H1.6zM2.4,20H3.2V20.8H2.4zM3.2,20H4V20.8H3.2zM4,20H4.8V20.8H4zM4.8,20H5.6V20.8H4.8zM8,20H8.8V20.8H8zM8.8,20H9.6V20.8H8.8zM9.6,20H10.4V20.8H9.6zM10.4,20H11.2V20.8H10.4zM13.6,20H14.4V20.8H13.6zM14.4,20H15.2V20.8H14.4zM16,20H16.8V20.8H16zM16.8,20H17.6V20.8H16.8zM17.6,20H18.4V20.8H17.6zM20.8,20H21.6V20.8H20.8zM24.8,20H25.6V20.8H24.8zM25.6,20H26.4V20.8H25.6zM27.2,20H28V20.8H27.2zM28.8,20H29.6V20.8H28.8zM30.4,20H31.2V20.8H30.4zM33.6,20H34.4V20.8H33.6zM34.4,20H35.2V20.8H34.4zM36,20H36.8V20.8H36zM1.6,20.8H2.4V21.6H1.6zM3.2,20.8H4V21.6H3.2zM4,20.8H4.8V21.6H4zM4.8,20.8H5.6V21.6H4.8zM5.6,20.8H6.4V21.6H5.6zM6.4,20.8H7.2V21.6H6.4zM7.2,20.8H8V21.6H7.2zM8,20.8H8.8V21.6H8zM10.4,20.8H11.2V21.6H10.4zM11.2,20.8H12V21.6H11.2zM12,20.8H12.8V21.6H12zM13.6,20.8H14.4V21.6H13.6zM14.4,20.8H15.2V21.6H14.4zM15.2,20.8H16V21.6H15.2zM17.6,20.8H18.4V21.6H17.6zM18.4,20.8H19.2V21.6H18.4zM19.2,20.8H20V21.6H19.2zM20,20.8H20.8V21.6H20zM20.8,20.8H21.6V21.6H20.8zM21.6,20.8H22.4V21.6H21.6zM22.4,20.8H23.2V21.6H22.4zM26.4,20.8H27.2V21.6H26.4zM30.4,20.8H31.2V21.6H30.4zM31.2,20.8H32V21.6H31.2zM32,20.8H32.8V21.6H32zM32.8,20.8H33.6V21.6H32.8zM33.6,20.8H34.4V21.6H33.6zM34.4,20.8H35.2V21.6H34.4zM36,20.8H36.8V21.6H36zM36.8,20.8H37.6V21.6H36.8zM1.6,21.6H2.4V22.4H1.6zM3.2,21.6H4V22.4H3.2zM4,21.6H4.8V22.4H4zM7.2,21.6H8V22.4H7.2zM8.8,21.6H9.6V22.4H8.8zM9.6,21.6H10.4V22.4H9.6zM10.4,21.6H11.2V22.4H10.4zM14.4,21.6H15.2V22.4H14.4zM15.2,21.6H16V22.4H15.2zM16.8,21.6H17.6V22.4H16.8zM17.6,21.6H18.4V22.4H17.6zM19.2,21.6H20V22.4H19.2zM21.6,21.6H22.4V22.4H21.6zM22.4,21.6H23.2V22.4H22.4zM23.2,21.6H24V22.4H23.2zM24,21.6H24.8V22.4H24zM26.4,21.6H27.2V22.4H26.4zM28,21.6H28.8V22.4H28zM32,21.6H32.8V22.4H32zM32.8,21.6H33.6V22.4H32.8zM35.2,21.6H36V22.4H35.2zM1.6,22.4H2.4V23.2H1.6zM2.4,22.4H3.2V23.2H2.4zM4,22.4H4.8V23.2H4zM5.6,22.4H6.4V23.2H5.6zM6.4,22.4H7.2V23.2H6.4zM8.8,22.4H9.6V23.2H8.8zM9.6,22.4H10.4V23.2H9.6zM11.2,22.4H12V23.2H11.2zM12,22.4H12.8V23.2H12zM12.8,22.4H13.6V23.2H12.8zM15.2,22.4H16V23.2H15.2zM16.8,22.4H17.6V23.2H16.8zM17.6,22.4H18.4V23.2H17.6zM18.4,22.4H19.2V23.2H18.4zM19.2,22.4H20V23.2H19.2zM20.8,22.4H21.6V23.2H20.8zM21.6,22.4H22.4V23.2H21.6zM22.4,22.4H23.2V23.2H22.4zM23.2,22.4H24V23.2H23.2zM24,22.4H24.8V23.2H24zM25.6,22.4H26.4V23.2H25.6zM27.2,22.4H28V23.2H27.2zM30.4,22.4H31.2V23.2H30.4zM32.8,22.4H33.6V23.2H32.8zM33.6,22.4H34.4V23.2H33.6zM35.2,22.4H36V23.2H35.2zM2.4,23.2H3.2V24H2.4zM3.2,23.2H4V24H3.2zM4,23.2H4.8V24H4zM5.6,23.2H6.4V24H5.6zM7.2,23.2H8V24H7.2zM8,23.2H8.8V24H8zM9.6,23.2H10.4V24H9.6zM11.2,23.2H12V24H11.2zM12,23.2H12.8V24H12zM13.6,23.2H14.4V24H13.6zM14.4,23.2H15.2V24H14.4zM17.6,23.2H18.4V24H17.6zM20.8,23.2H21.6V24H20.8zM21.6,23.2H22.4V24H21.6zM23.2,23.2H24V24H23.2zM24,23.2H24.8V24H24zM26.4,23.2H27.2V24H26.4zM27.2,23.2H28V24H27.2zM28.8,23.2H29.6V24H28.8zM29.6,23.2H30.4V24H29.6zM30.4,23.2H31.2V24H30.4zM31.2,23.2H32V24H31.2zM32,23.2H32.8V24H32zM32.8,23.2H33.6V24H32.8zM34.4,23.2H35.2V24H34.4zM35.2,23.2H36V24H35.2zM36,23.2H36.8V24H36zM3.2,24H4V24.8H3.2zM4.8,24H5.6V24.8H4.8zM6.4,24H7.2V24.8H6.4zM9.6,24H10.4V24.8H9.6zM12,24H12.8V24.8H12zM13.6,24H14.4V24.8H13.6zM16,24H16.8V24.8H16zM16.8,24H17.6V24.8H16.8zM18.4,24H19.2V24.8H18.4zM21.6,24H22.4V24.8H21.6zM22.4,24H23.2V24.8H22.4zM23.2,24H24V24.8H23.2zM26.4,24H27.2V24.8H26.4zM27.2,24H28V24.8H27.2zM29.6,24H30.4V24.8H29.6zM30.4,24H31.2V24.8H30.4zM32.8,24H33.6V24.8H32.8zM33.6,24H34.4V24.8H33.6zM34.4,24H35.2V24.8H34.4zM35.2,24H36V24.8H35.2zM36.8,24H37.6V24.8H36.8zM3.2,24.8H4V25.6H3.2zM4,24.8H4.8V25.6H4zM4.8,24.8H5.6V25.6H4.8zM5.6,24.8H6.4V25.6H5.6zM7.2,24.8H8V25.6H7.2zM13.6,24.8H14.4V25.6H13.6zM16,24.8H16.8V25.6H16zM16.8,24.8H17.6V25.6H16.8zM20,24.8H20.8V25.6H20zM24.8,24.8H25.6V25.6H24.8zM28.8,24.8H29.6V25.6H28.8zM30.4,24.8H31.2V25.6H30.4zM31.2,24.8H32V25.6H31.2zM32,24.8H32.8V25.6H32zM32.8,24.8H33.6V25.6H32.8zM33.6,24.8H34.4V25.6H33.6zM34.4,24.8H35.2V25.6H34.4zM36,24.8H36.8V25.6H36zM36.8,24.8H37.6V25.6H36.8zM1.6,25.6H2.4V26.4H1.6zM2.4,25.6H3.2V26.4H2.4zM3.2,25.6H4V26.4H3.2zM4.8,25.6H5.6V26.4H4.8zM6.4,25.6H7.2V26.4H6.4zM8,25.6H8.8V26.4H8zM9.6,25.6H10.4V26.4H9.6zM10.4,25.6H11.2V26.4H10.4zM12,25.6H12.8V26.4H12zM12.8,25.6H13.6V26.4H12.8zM13.6,25.6H14.4V26.4H13.6zM15.2,25.6H16V26.4H15.2zM16,25.6H16.8V26.4H16zM17.6,25.6H18.4V26.4H17.6zM20,25.6H20.8V26.4H20zM20.8,25.6H21.6V26.4H20.8zM21.6,25.6H22.4V26.4H21.6zM22.4,25.6H23.2V26.4H22.4zM24,25.6H24.8V26.4H24zM27.2,25.6H28V26.4H27.2zM28,25.6H28.8V26.4H28zM28.8,25.6H29.6V26.4H28.8zM30.4,25.6H31.2V26.4H30.4zM32.8,25.6H33.6V26.4H32.8zM3.2,26.4H4V27.2H3.2zM9.6,26.4H10.4V27.2H9.6zM10.4,26.4H11.2V27.2H10.4zM12,26.4H12.8V27.2H12zM13.6,26.4H14.4V27.2H13.6zM14.4,26.4H15.2V27.2H14.4zM15.2,26.4H16V27.2H15.2zM16,26.4H16.8V27.2H16zM17.6,26.4H18.4V27.2H17.6zM18.4,26.4H19.2V27.2H18.4zM19.2,26.4H20V27.2H19.2zM20,26.4H20.8V27.2H20zM21.6,26.4H22.4V27.2H21.6zM22.4,26.4H23.2V27.2H22.4zM24,26.4H24.8V27.2H24zM24.8,26.4H25.6V27.2H24.8zM28,26.4H28.8V27.2H28zM30.4,26.4H31.2V27.2H30.4zM36,26.4H36.8V27.2H36zM36.8,26.4H37.6V27.2H36.8zM2.4,27.2H3.2V28H2.4zM3.2,27.2H4V28H3.2zM4.8,27.2H5.6V28H4.8zM5.6,27.2H6.4V28H5.6zM6.4,27.2H7.2V28H6.4zM8,27.2H8.8V28H8zM8.8,27.2H9.6V28H8.8zM11.2,27.2H12V28H11.2zM14.4,27.2H15.2V28H14.4zM15.2,27.2H16V28H15.2zM16.8,27.2H17.6V28H16.8zM18.4,27.2H19.2V28H18.4zM19.2,27.2H20V28H19.2zM20,27.2H20.8V28H20zM21.6,27.2H22.4V28H21.6zM23.2,27.2H24V28H23.2zM24,27.2H24.8V28H24zM25.6,27.2H26.4V28H25.6zM28,27.2H28.8V28H28zM30.4,27.2H31.2V28H30.4zM32,27.2H32.8V28H32zM35.2,27.2H36V28H35.2zM1.6,28H2.4V28.8H1.6zM4,28H4.8V28.8H4zM7.2,28H8V28.8H7.2zM8.8,28H9.6V28.8H8.8zM9.6,28H10.4V28.8H9.6zM12.8,28H13.6V28.8H12.8zM14.4,28H15.2V28.8H14.4zM15.2,28H16V28.8H15.2zM16.8,28H17.6V28.8H16.8zM17.6,28H18.4V28.8H17.6zM18.4,28H19.2V28.8H18.4zM19.2,28H20V28.8H19.2zM20.8,28H21.6V28.8H20.8zM21.6,28H22.4V28.8H21.6zM25.6,28H26.4V28.8H25.6zM26.4,28H27.2V28.8H26.4zM30.4,28H31.2V28.8H30.4zM31.2,28H32V28.8H31.2zM32,28H32.8V28.8H32zM32.8,28H33.6V28.8H32.8zM34.4,28H35.2V28.8H34.4zM36.8,28H37.6V28.8H36.8zM4.8,28.8H5.6V29.6H4.8zM6.4,28.8H7.2V29.6H6.4zM9.6,28.8H10.4V29.6H9.6zM12,28.8H12.8V29.6H12zM12.8,28.8H13.6V29.6H12.8zM13.6,28.8H14.4V29.6H13.6zM14.4,28.8H15.2V29.6H14.4zM16,28.8H16.8V29.6H16zM18.4,28.8H19.2V29.6H18.4zM19.2,28.8H20V29.6H19.2zM20.8,28.8H21.6V29.6H20.8zM24.8,28.8H25.6V29.6H24.8zM25.6,28.8H26.4V29.6H25.6zM26.4,28.8H27.2V29.6H26.4zM27.2,28.8H28V29.6H27.2zM28,28.8H28.8V29.6H28zM28.8,28.8H29.6V29.6H28.8zM31.2,28.8H32V29.6H31.2zM32,28.8H32.8V29.6H32zM32.8,28.8H33.6V29.6H32.8zM35.2,28.8H36V29.6H35.2zM36,28.8H36.8V29.6H36zM36.8,28.8H37.6V29.6H36.8zM2.4,29.6H3.2V30.4H2.4zM3.2,29.6H4V30.4H3.2zM4,29.6H4.8V30.4H4zM4.8,29.6H5.6V30.4H4.8zM8,29.6H8.8V30.4H8zM12,29.6H12.8V30.4H12zM12.8,29.6H13.6V30.4H12.8zM13.6,29.6H14.4V30.4H13.6zM14.4,29.6H15.2V30.4H14.4zM15.2,29.6H16V30.4H15.2zM17.6,29.6H18.4V30.4H17.6zM20,29.6H20.8V30.4H20zM22.4,29.6H23.2V30.4H22.4zM23.2,29.6H24V30.4H23.2zM25.6,29.6H26.4V30.4H25.6zM26.4,29.6H27.2V30.4H26.4zM27.2,29.6H28V30.4H27.2zM28.8,29.6H29.6V30.4H28.8zM29.6,29.6H30.4V30.4H29.6zM31.2,29.6H32V30.4H31.2zM32,29.6H32.8V30.4H32zM32.8,29.6H33.6V30.4H32.8zM34.4,29.6H35.2V30.4H34.4zM36,29.6H36.8V30.4H36zM1.6,30.4H2.4V31.2H1.6zM4,30.4H4.8V31.2H4zM4.8,30.4H5.6V31.2H4.8zM6.4,30.4H7.2V31.2H6.4zM8.8,30.4H9.6V31.2H8.8zM9.6,30.4H10.4V31.2H9.6zM10.4,30.4H11.2V31.2H10.4zM11.2,30.4H12V31.2H11.2zM14.4,30.4H15.2V31.2H14.4zM16.8,30.4H17.6V31.2H16.8zM17.6,30.4H18.4V31.2H17.6zM18.4,30.4H19.2V31.2H18.4zM19.2,30.4H20V31.2H19.2zM20,30.4H20.8V31.2H20zM20.8,30.4H21.6V31.2H20.8zM22.4,30.4H23.2V31.2H22.4zM23.2,30.4H24V31.2H23.2zM24.8,30.4H25.6V31.2H24.8zM25.6,30.4H26.4V31.2H25.6zM26.4,30.4H27.2V31.2H26.4zM28.8,30.4H29.6V31.2H28.8zM30.4,30.4H31.2V31.2H30.4zM31.2,30.4H32V31.2H31.2zM32,30.4H32.8V31.2H32zM32.8,30.4H33.6V31.2H32.8zM33.6,30.4H34.4V31.2H33.6zM36,30.4H36.8V31.2H36zM8,31.2H8.8V32H8zM9.6,31.2H10.4V32H9.6zM13.6,31.2H14.4V32H13.6zM14.4,31.2H15.2V32H14.4zM15.2,31.2H16V32H15.2zM16.8,31.2H17.6V32H16.8zM17.6,31.2H18.4V32H17.6zM20.8,31.2H21.6V32H20.8zM21.6,31.2H22.4V32H21.6zM23.2,31.2H24V32H23.2zM24,31.2H24.8V32H24zM26.4,31.2H27.2V32H26.4zM30.4,31.2H31.2V32H30.4zM33.6,31.2H34.4V32H33.6zM1.6,32H2.4V32.8H1.6zM2.4,32H3.2V32.8H2.4zM3.2,32H4V32.8H3.2zM4,32H4.8V32.8H4zM4.8,32H5.6V32.8H4.8zM5.6,32H6.4V32.8H5.6zM6.4,32H7.2V32.8H6.4zM8,32H8.8V32.8H8zM8.8,32H9.6V32.8H8.8zM9.6,32H10.4V32.8H9.6zM10.4,32H11.2V32.8H10.4zM12,32H12.8V32.8H12zM12.8,32H13.6V32.8H12.8zM15.2,32H16V32.8H15.2zM16,32H16.8V32.8H16zM17.6,32H18.4V32.8H17.6zM19.2,32H20V32.8H19.2zM20.8,32H21.6V32.8H20.8zM21.6,32H22.4V32.8H21.6zM23.2,32H24V32.8H23.2zM25.6,32H26.4V32.8H25.6zM27.2,32H28V32.8H27.2zM29.6,32H30.4V32.8H29.6zM30.4,32H31.2V32.8H30.4zM32,32H32.8V32.8H32zM33.6,32H34.4V32.8H33.6zM1.6,32.8H2.4V33.6H1.6zM6.4,32.8H7.2V33.6H6.4zM8,32.8H8.8V33.6H8zM13.6,32.8H14.4V33.6H13.6zM14.4,32.8H15.2V33.6H14.4zM15.2,32.8H16V33.6H15.2zM17.6,32.8H18.4V33.6H17.6zM20.8,32.8H21.6V33.6H20.8zM21.6,32.8H22.4V33.6H21.6zM22.4,32.8H23.2V33.6H22.4zM23.2,32.8H24V33.6H23.2zM24,32.8H24.8V33.6H24zM25.6,32.8H26.4V33.6H25.6zM27.2,32.8H28V33.6H27.2zM28.8,32.8H29.6V33.6H28.8zM29.6,32.8H30.4V33.6H29.6zM30.4,32.8H31.2V33.6H30.4zM33.6,32.8H34.4V33.6H33.6zM34.4,32.8H35.2V33.6H34.4zM35.2,32.8H36V33.6H35.2zM36,32.8H36.8V33.6H36zM1.6,33.6H2.4V34.4H1.6zM3.2,33.6H4V34.4H3.2zM4,33.6H4.8V34.4H4zM4.8,33.6H5.6V34.4H4.8zM6.4,33.6H7.2V34.4H6.4zM9.6,33.6H10.4V34.4H9.6zM12,33.6H12.8V34.4H12zM16,33.6H16.8V34.4H16zM17.6,33.6H18.4V34.4H17.6zM18.4,33.6H19.2V34.4H18.4zM19.2,33.6H20V34.4H19.2zM20,33.6H20.8V34.4H20zM20.8,33.6H21.6V34.4H20.8zM22.4,33.6H23.2V34.4H22.4zM23.2,33.6H24V34.4H23.2zM25.6,33.6H26.4V34.4H25.6zM26.4,33.6H27.2V34.4H26.4zM27.2,33.6H28V34.4H27.2zM30.4,33.6H31.2V34.4H30.4zM31.2,33.6H32V34.4H31.2zM32,33.6H32.8V34.4H32zM32.8,33.6H33.6V34.4H32.8zM33.6,33.6H34.4V34.4H33.6zM35.2,33.6H36V34.4H35.2zM36.8,33.6H37.6V34.4H36.8zM1.6,34.4H2.4V35.2H1.6zM3.2,34.4H4V35.2H3.2zM4,34.4H4.8V35.2H4zM4.8,34.4H5.6V35.2H4.8zM6.4,34.4H7.2V35.2H6.4zM8,34.4H8.8V35.2H8zM9.6,34.4H10.4V35.2H9.6zM10.4,34.4H11.2V35.2H10.4zM11.2,34.4H12V35.2H11.2zM13.6,34.4H14.4V35.2H13.6zM17.6,34.4H18.4V35.2H17.6zM18.4,34.4H19.2V35.2H18.4zM20,34.4H20.8V35.2H20zM24.8,34.4H25.6V35.2H24.8zM26.4,34.4H27.2V35.2H26.4zM27.2,34.4H28V35.2H27.2zM28,34.4H28.8V35.2H28zM28.8,34.4H29.6V35.2H28.8zM30.4,34.4H31.2V35.2H30.4zM32,34.4H32.8V35.2H32zM32.8,34.4H33.6V35.2H32.8zM34.4,34.4H35.2V35.2H34.4zM36.8,34.4H37.6V35.2H36.8zM1.6,35.2H2.4V36H1.6zM3.2,35.2H4V36H3.2zM4,35.2H4.8V36H4zM4.8,35.2H5.6V36H4.8zM6.4,35.2H7.2V36H6.4zM8,35.2H8.8V36H8zM10.4,35.2H11.2V36H10.4zM12,35.2H12.8V36H12zM12.8,35.2H13.6V36H12.8zM13.6,35.2H14.4V36H13.6zM15.2,35.2H16V36H15.2zM16,35.2H16.8V36H16zM17.6,35.2H18.4V36H17.6zM18.4,35.2H19.2V36H18.4zM20.8,35.2H21.6V36H20.8zM22.4,35.2H23.2V36H22.4zM24,35.2H24.8V36H24zM28,35.2H28.8V36H28zM28.8,35.2H29.6V36H28.8zM29.6,35.2H30.4V36H29.6zM30.4,35.2H31.2V36H30.4zM31.2,35.2H32V36H31.2zM32,35.2H32.8V36H32zM35.2,35.2H36V36H35.2zM36,35.2H36.8V36H36zM1.6,36H2.4V36.8H1.6zM6.4,36H7.2V36.8H6.4zM9.6,36H10.4V36.8H9.6zM11.2,36H12V36.8H11.2zM12,36H12.8V36.8H12zM15.2,36H16V36.8H15.2zM16,36H16.8V36.8H16zM18.4,36H19.2V36.8H18.4zM19.2,36H20V36.8H19.2zM20.8,36H21.6V36.8H20.8zM22.4,36H23.2V36.8H22.4zM24,36H24.8V36.8H24zM24.8,36H25.6V36.8H24.8zM28,36H28.8V36.8H28zM28.8,36H29.6V36.8H28.8zM32,36H32.8V36.8H32zM33.6,36H34.4V36.8H33.6zM36.8,36H37.6V36.8H36.8zM1.6,36.8H2.4V37.6H1.6zM2.4,36.8H3.2V37.6H2.4zM3.2,36.8H4V37.6H3.2zM4,36.8H4.8V37.6H4zM4.8,36.8H5.6V37.6H4.8zM5.6,36.8H6.4V37.6H5.6zM6.4,36.8H7.2V37.6H6.4zM8,36.8H8.8V37.6H8zM9.6,36.8H10.4V37.6H9.6zM11.2,36.8H12V37.6H11.2zM13.6,36.8H14.4V37.6H13.6zM14.4,36.8H15.2V37.6H14.4zM15.2,36.8H16V37.6H15.2zM16,36.8H16.8V37.6H16zM18.4,36.8H19.2V37.6H18.4zM21.6,36.8H22.4V37.6H21.6zM24,36.8H24.8V37.6H24zM24.8,36.8H25.6V37.6H24.8zM25.6,36.8H26.4V37.6H25.6zM28,36.8H28.8V37.6H28zM29.6,36.8H30.4V37.6H29.6zM31.2,36.8H32V37.6H31.2zM32,36.8H32.8V37.6H32zM35.2,36.8H36V37.6H35.2z" id="qr-path" fill="#000000" fill-opacity="1" fill-rule="nonzero" stroke="none"/></svg>
+          </div>
+          <div class="qr-meta">
+            <p class="qr-label">Scan to subscribe</p>
+            <p class="qr-hint">Opens the ICS feed in your calendar app. Works with Google Calendar, Apple Calendar, Outlook, and more.</p>
+            <span class="mailto-copy" title="Click to select and copy"
+              onclick="this.select?.() || window.getSelection()?.selectAllChildren(this)">
+              …/basic.ics
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="connect-card">
+        <span class="connect-card-icon">✉️</span>
+        <h3>Questions About an Event?</h3>
+        <p>Reach out directly — we're happy to answer questions about upcoming classes, workshops, or Open House. We try to respond within one business day.</p>
+        <a class="btn-sm" href="mailto:info@anchoragemakerspace.com">
+          Email Us →
+        </a>
+      </div>
+
+      <div class="connect-card">
+        <span class="connect-card-icon">🔑</span>
+        <h3>Members Get Priority</h3>
+        <p>AMS members get discounts on classes and early access to workshop registration. 24/7 keycard access means you can practice anytime.</p>
+        <a class="btn-sm" href="membership.html">
+          View Membership Plans →
+        </a>
+      </div>
+
+    </div>
+  </section>
+</div><!-- /page-content -->
+
+<footer>
+  <p>© 2026 Anchorage Makerspace · 1406 W 33rd Ave Unit F, Anchorage AK 99503 ·
+    <a href="visit.html">Visit</a> ·
+    <a href="membership.html">Join</a> ·
+    <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/chatbot.js"></script>
+</body>
+</html>

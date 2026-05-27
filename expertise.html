@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tools & Expertise — Anchorage Makerspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+
+    .expertise-card {
+      background: var(--mid); border: 1px solid var(--steel);
+      border-radius: 8px; overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .expertise-card:hover { border-color: var(--green); transform: translateY(-3px); }
+
+    .expertise-card-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 1.25rem 1.25rem 1rem;
+      border-bottom: 1px solid var(--steel);
+    }
+
+    .expertise-icon-wrap {
+      width: 48px; height: 48px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(46,204,90,0.10);
+      border: 1px solid rgba(46,204,90,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+
+    .expertise-card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.03em;
+    }
+
+    .expertise-card-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .expertise-card-body { padding: 1rem 1.25rem 1.25rem; }
+
+    .tool-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+
+    .tool-chip {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 4px;
+      background: var(--steel); color: var(--text);
+      border: 1px solid rgba(255,255,255,0.07);
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .skills-label {
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--green); font-weight: 700; margin-bottom: 8px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .skill-list { list-style: none; }
+
+    .skill-list li {
+      font-size: 13px; color: var(--text);
+      padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .skill-list li::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0; opacity: 0.8;
+    }
+
+    .expertise-card-footer {
+      padding: 0.75rem 1.25rem;
+      background: rgba(46,204,90,0.05);
+      border-top: 1px solid rgba(46,204,90,0.12);
+      font-size: 12px; color: var(--green); font-weight: 600;
+      letter-spacing: 0.04em; font-family: 'Share Tech Mono', monospace;
+    }
+
+    .callout {
+      margin-top: 3rem;
+      background: var(--mid);
+      border: 1px solid rgba(46,204,90,0.3);
+      border-left: 4px solid var(--green);
+      border-radius: 8px; padding: 2rem;
+      display: flex; align-items: center;
+      gap: 2rem; flex-wrap: wrap;
+    }
+
+    .callout-text { flex: 1; min-width: 220px; }
+
+    .callout-text h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px; font-weight: 800; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-text p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace Logo"
+      style="height:58px; width:auto; filter: drop-shadow(0 0 6px rgba(46,204,90,0.4));">
+  </a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+
+  <div class="page-hero" style="position:relative;">
+    <div class="page-hero-inner">
+      <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace" style="position:absolute; top:1.25rem; right:2rem; height:225px; width:auto; opacity:0.82; filter:drop-shadow(0 0 14px rgba(46,204,90,0.45)); pointer-events:none; z-index:1;">
+      <div class="section-label">Knowledge Meets Equipment</div>
+      <h1>Tools &amp; <em>Expertise</em></h1>
+      <p>World-class equipment is only half the story. Our members bring deep knowledge across dozens of disciplines — and they love to share it.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <div class="expertise-grid">
+
+        <div class="expertise-card">
+          <div class="expertise-card-header">
+            <div class="expertise-icon-wrap">🪵</div>
+            <div>
+              <div class="expertise-card-title">Woodworking</div>
+              <div class="expertise-card-subtitle">Traditional craft & modern technique</div>
+            </div>
+          </div>
+          <div class="expertise-card-body">
+            <div class="tool-chips">
+              <span class="tool-chip">Table Saw</span>
+              <span class="tool-chip">Band Saw</span>
+              <span class="tool-chip">Router Table</span>
+              <span class="tool-chip">Lathe</span>
+              <span class="tool-chip">Jointer</span>
+            </div>
+            <div class="skills-label">Member Knowledge</div>
+            <ul class="skill-list">
+              <li>Joinery, dovetails & mortise-tenon</li>
+              <li>Cabinet making & furniture design</li>
+              <li>Wood finishing, staining & sealing</li>
+              <li>Shop safety certification available</li>
+            </ul>
+          </div>
+          <div class="expertise-card-footer">✦ Classes offered regularly</div>
+        </div>
+
+        <div class="expertise-card">
+          <div class="expertise-card-header">
+            <div class="expertise-icon-wrap">🖨️</div>
+            <div>
+              <div class="expertise-card-title">Digital Fabrication</div>
+              <div class="expertise-card-subtitle">3D printing, laser & CNC</div>
+            </div>
+          </div>
+          <div class="expertise-card-body">
+            <div class="tool-chips">
+              <span class="tool-chip">FDM Printers</span>
+              <span class="tool-chip">Resin</span>
+              <span class="tool-chip">CO₂ Laser</span>
+              <span class="tool-chip">CNC Router</span>
+              <span class="tool-chip">Vinyl Cutter</span>
+            </div>
+            <div class="skills-label">Member Knowledge</div>
+            <ul class="skill-list">
+              <li>CAD design with Fusion 360 & FreeCAD</li>
+              <li>Slicer settings & print optimization</li>
+              <li>Laser engraving on wood, acrylic & leather</li>
+              <li>CAM toolpath generation for CNC</li>
+            </ul>
+          </div>
+          <div class="expertise-card-footer">✦ Design software on all workstations</div>
+        </div>
+
+        <div class="expertise-card">
+          <div class="expertise-card-header">
+            <div class="expertise-icon-wrap">⚡</div>
+            <div>
+              <div class="expertise-card-title">Electronics & Robotics</div>
+              <div class="expertise-card-subtitle">From soldering to autonomous systems</div>
+            </div>
+          </div>
+          <div class="expertise-card-body">
+            <div class="tool-chips">
+              <span class="tool-chip">Arduino</span>
+              <span class="tool-chip">Raspberry Pi</span>
+              <span class="tool-chip">Oscilloscope</span>
+              <span class="tool-chip">Soldering</span>
+              <span class="tool-chip">PCB Tools</span>
+            </div>
+            <div class="skills-label">Member Knowledge</div>
+            <ul class="skill-list">
+              <li>Circuit design & PCB layout</li>
+              <li>Microcontroller programming (C, Python)</li>
+              <li>Robotics & automation systems</li>
+              <li>IoT & smart home integration</li>
+            </ul>
+          </div>
+          <div class="expertise-card-footer">✦ Active robotics team on-site</div>
+        </div>
+
+        <div class="expertise-card">
+          <div class="expertise-card-header">
+            <div class="expertise-icon-wrap">🔥</div>
+            <div>
+              <div class="expertise-card-title">Metal & Welding</div>
+              <div class="expertise-card-subtitle">Fabrication & metalwork</div>
+            </div>
+          </div>
+          <div class="expertise-card-body">
+            <div class="tool-chips">
+              <span class="tool-chip">MIG Welder</span>
+              <span class="tool-chip">TIG Welder</span>
+              <span class="tool-chip">Angle Grinder</span>
+              <span class="tool-chip">Drill Press</span>
+            </div>
+            <div class="skills-label">Member Knowledge</div>
+            <ul class="skill-list">
+              <li>MIG & TIG welding technique</li>
+              <li>Metal shaping, cutting & grinding</li>
+              <li>Structural fabrication & repair</li>
+              <li>Safety gear use & weld inspection</li>
+            </ul>
+          </div>
+          <div class="expertise-card-footer">✦ Certification required — training available</div>
+        </div>
+
+        <div class="expertise-card">
+          <div class="expertise-card-header">
+            <div class="expertise-icon-wrap">🎨</div>
+            <div>
+              <div class="expertise-card-title">Art & Design</div>
+              <div class="expertise-card-subtitle">Creative & visual arts</div>
+            </div>
+          </div>
+          <div class="expertise-card-body">
+            <div class="tool-chips">
+              <span class="tool-chip">Large Format</span>
+              <span class="tool-chip">Inkscape</span>
+              <span class="tool-chip">Glasswork</span>
+              <span class="tool-chip">Vinyl</span>
+            </div>
+            <div class="skills-label">Member Knowledge</div>
+            <ul class="skill-list">
+              <li>Adobe Creative Suite & Inkscape</li>
+              <li>Flameworking & glass art</li>
+              <li>Steampunk & mixed media sculpture</li>
+              <li>Large format print & signage</li>
+            </ul>
+          </div>
+          <div class="expertise-card-footer">✦ First Friday art events hosted here</div>
+        </div>
+
+        <div class="expertise-card">
+          <div class="expertise-card-header">
+            <div class="expertise-icon-wrap">🧵</div>
+            <div>
+              <div class="expertise-card-title">Textiles & Soft Crafts</div>
+              <div class="expertise-card-subtitle">Sewing, fiber arts & wearables</div>
+            </div>
+          </div>
+          <div class="expertise-card-body">
+            <div class="tool-chips">
+              <span class="tool-chip">Sewing Machines</span>
+              <span class="tool-chip">Serger</span>
+              <span class="tool-chip">Embroidery</span>
+            </div>
+            <div class="skills-label">Member Knowledge</div>
+            <ul class="skill-list">
+              <li>Garment construction & alterations</li>
+              <li>Pattern drafting & modification</li>
+              <li>E-textiles & wearable electronics</li>
+              <li>Upholstery & soft furnishings</li>
+            </ul>
+          </div>
+          <div class="expertise-card-footer">✦ Beginner-friendly workshops available</div>
+        </div>
+
+      </div>
+
+      <!-- Programs strip -->
+      <div style="margin-bottom:2rem; background:var(--mid); border:1px solid var(--steel);
+        border-radius:10px; padding:2rem;">
+        <div class="section-label" style="margin-bottom:1rem;">AMS Programs</div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:0.5rem 2rem;">
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> 3D Printing</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Business Incubation</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Robotics</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Meeting Space</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Electronics</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> STEM Education</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Woodworking</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Tutoring</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Metal Working</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Lectures</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Textiles</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Classes & Workshops</div>
+          <div style="font-size:13px; color:var(--text); padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; align-items:center; gap:8px;"><span style="color:var(--green);">▸</span> Programming</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-text">
+          <h3>Bring Your Expertise. Share What You Know.</h3>
+          <p>Every member brings unique skills to the community. Whether you're a seasoned engineer, a weekend hobbyist, or a total beginner — there's a place for you here. Experienced members often lead classes and mentor newcomers. Your knowledge has value here.</p>
+        </div>
+        <a href="membership.html" class="btn-primary">Join the Community →</a>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 Anchorage Makerspace · Community Research and Development Workspace</p>
+  <p style="margin-top:6px;">1406 W 33rd Ave Unit F, Anchorage AK 99503 · <a href="mailto:info@anchoragemakerspace.com">info@anchoragemakerspace.com</a></p>
+  <p style="margin-top:6px;">
+    <a href="visit.html">Visit</a> · <a href="membership.html">Join</a> · <a href="livestream.html">Live Cam</a> · <a href="contact-member.html">Contact</a> · <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+</body>
+</html>

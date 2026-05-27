@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Stream — Anchorage Makerspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .stream-wrap {
+      max-width: 1100px; margin: 0 auto; width: 100%;
+    }
+
+    .stream-stage {
+      position: relative;
+      background: var(--charcoal);
+      border: 1px solid var(--steel);
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      margin-top: 2rem;
+      display: block;
+    }
+
+    .live-badge {
+      position: absolute; top: 16px; left: 16px; z-index: 20;
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(0,0,0,0.75);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+      border-radius: 6px; padding: 6px 14px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px; letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #e53e3e;
+      box-shadow: 0 0 6px rgba(229,62,62,0.8);
+      animation: livepulse 1.2s infinite;
+    }
+
+    .live-badge.offline .live-dot {
+      background: var(--muted); box-shadow: none; animation: none;
+    }
+
+    @keyframes livepulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    #stream-iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; border: 0;
+      display: none;
+    }
+
+    #offline-placeholder {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      display: flex;
+    }
+
+    #offline-photo {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; border: 0;
+    }
+
+    .offline-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.52);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      z-index: 2;
+    }
+
+    .offline-icon { font-size: 48px; opacity: 0.6; }
+
+    .offline-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+
+    .offline-sub {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px; color: var(--muted); letter-spacing: 0.08em;
+    }
+
+    .stream-info {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
+      padding: 28px 16px 10px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.78));
+      pointer-events: none;
+    }
+
+    .stream-meta {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px; color: rgba(255,255,255,0.45);
+      letter-spacing: 0.07em;
+    }
+
+    .stream-meta span { color: var(--green); }
+
+    .stage-footer {
+      display: flex; justify-content: flex-end; margin-top: 1rem;
+    }
+
+    /* Board panel */
+    .board-panel {
+      margin-top: 2rem; background: var(--mid);
+      border: 1px solid var(--steel); border-radius: 10px; overflow: hidden;
+    }
+
+    .board-panel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem; border-bottom: 1px solid var(--steel);
+      cursor: pointer; user-select: none; transition: background 0.2s;
+    }
+
+    .board-panel-header:hover { background: rgba(255,255,255,0.03); }
+
+    .board-panel-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .board-panel-body { padding: 1.5rem; display: none; }
+    .board-panel-body.open { display: block; }
+
+    .auth-row {
+      display: flex; gap: 0.75rem; align-items: center;
+      flex-wrap: wrap; margin-bottom: 1.25rem;
+    }
+
+    #board-pass {
+      background: var(--charcoal); border: 1px solid var(--steel);
+      border-radius: 6px; color: var(--white);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px; padding: 10px 14px;
+      outline: none; flex: 1; min-width: 180px;
+      transition: border-color 0.2s;
+    }
+
+    #board-pass:focus { border-color: var(--green); }
+
+    #auth-msg {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px; color: var(--muted);
+      letter-spacing: 0.06em; margin-top: 0.5rem;
+    }
+
+    #auth-msg.error { color: #e53e3e; }
+    #auth-msg.ok { color: var(--green); }
+
+    .board-controls { display: none; }
+    .board-controls.visible { display: block; }
+
+    .control-row {
+      display: flex; align-items: center; gap: 1.5rem;
+      flex-wrap: wrap; margin-bottom: 1.25rem;
+    }
+
+    .toggle-switch { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+
+    .switch-track {
+      width: 48px; height: 26px; border-radius: 13px;
+      background: var(--steel); position: relative;
+      transition: background 0.2s; flex-shrink: 0;
+    }
+
+    .switch-track.on { background: var(--green); }
+
+    .switch-thumb {
+      position: absolute; top: 3px; left: 3px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--white); transition: left 0.2s;
+    }
+
+    .switch-track.on .switch-thumb { left: 25px; }
+
+    .switch-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    .stream-url-row { margin-top: 1rem; }
+
+    .stream-url-row label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--muted);
+      display: block; margin-bottom: 6px;
+    }
+
+    .stream-url-input-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+    #stream-url-input {
+      flex: 1; min-width: 200px;
+      background: var(--charcoal); border: 1px solid var(--steel);
+      border-radius: 6px; color: var(--white);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px; padding: 10px 14px;
+      outline: none; transition: border-color 0.2s;
+    }
+
+    #stream-url-input:focus { border-color: var(--green); }
+
+    .board-note {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px; color: var(--muted);
+      margin-top: 1rem; line-height: 1.7; padding: 10px 14px;
+      background: rgba(46,204,90,0.05);
+      border-left: 3px solid rgba(46,204,90,0.2);
+      border-radius: 0 4px 4px 0;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace Logo"
+      style="height:58px; width:auto; filter: drop-shadow(0 0 6px rgba(46,204,90,0.4));">
+  </a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+
+  <div class="page-hero" style="position:relative;">
+    <div class="page-hero-inner">
+      <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace" style="position:absolute; top:1.25rem; right:2rem; height:225px; width:auto; opacity:0.82; filter:drop-shadow(0 0 14px rgba(46,204,90,0.45)); pointer-events:none; z-index:1;">
+      <div class="section-label">Shop Camera</div>
+      <h1>Live <em>Feed</em></h1>
+      <p>A live look inside the Anchorage Makerspace shop. Stream powered by Wyze Cam v3 via WebRTC — no transcoding, direct H.264.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="stream-wrap">
+
+      <div class="stream-stage">
+
+        <!-- Live / Offline badge inside stage -->
+        <div class="live-badge offline" id="live-badge">
+          <div class="live-dot"></div>
+          <span id="live-label">Offline</span>
+        </div>
+
+        <!-- WebRTC live feed -->
+        <iframe id="stream-iframe" allow="autoplay" allowfullscreen src=""></iframe>
+
+        <!-- Offline placeholder — Google Drive photo -->
+        <div id="offline-placeholder">
+          <iframe
+            id="offline-photo"
+            allow="autoplay"
+            src="https://drive.google.com/file/d/1olthuXRahBW5wzcizsOCfolLoD8-W_Cr/preview"
+            frameborder="0"
+          ></iframe>
+          <div class="offline-overlay">
+            <div class="offline-icon">📷</div>
+            <div class="offline-title">Stream Offline</div>
+            <div class="offline-sub">Check back during open hours · Mon–Fri</div>
+          </div>
+        </div>
+
+        <!-- Bottom info overlay inside stage -->
+        <div class="stream-info">
+          <div class="stream-meta">
+            <span>Camera</span> · Wyze Cam v3 · H.264 &nbsp;·&nbsp;
+            <span>Transport</span> · WebRTC / wyze-bridge &nbsp;·&nbsp;
+            <span>Location</span> · 1406 W 33rd Ave Unit F, Anchorage AK
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Visit button below stage -->
+      <div class="stage-footer">
+        <a href="visit.html" class="btn-secondary" style="font-size:13px; padding:10px 22px;">Visit In Person →</a>
+      </div>
+
+      <!-- Board Control Panel -->
+      <div class="board-panel" id="board-panel">
+        <div class="board-panel-header" onclick="togglePanel()">
+          <div class="board-panel-title">🔒 <span>Board Controls</span></div>
+          <div id="panel-chevron">▾</div>
+        </div>
+        <div class="board-panel-body" id="panel-body">
+
+          <div id="auth-section">
+            <p style="font-size:13px; color:var(--muted); margin-bottom:1rem;">
+              Enter the board access code to enable or disable the public stream.
+            </p>
+            <div class="auth-row">
+              <input type="password" id="board-pass" placeholder="Board access code" autocomplete="off">
+              <button class="btn-primary" onclick="authenticate()" style="padding:10px 22px; font-size:13px;">Unlock →</button>
+            </div>
+            <div id="auth-msg"></div>
+          </div>
+
+          <div class="board-controls" id="board-controls">
+            <div class="control-row">
+              <div class="toggle-switch" onclick="toggleStream()">
+                <div class="switch-track" id="switch-track">
+                  <div class="switch-thumb"></div>
+                </div>
+                <span class="switch-label" id="switch-label">Stream: OFF</span>
+              </div>
+            </div>
+
+            <div class="stream-url-row">
+              <label for="stream-url-input">WebRTC Stream URL</label>
+              <div class="stream-url-input-row">
+                <input type="text" id="stream-url-input"
+                  placeholder="http://YOUR-PI-IP:8889/backyard/"
+                  value="http://10.0.0.16:8889/backyard/">
+                <button class="btn-secondary" onclick="applyUrl()" style="padding:10px 18px; font-size:13px;">Apply</button>
+              </div>
+            </div>
+
+            <div class="board-note">
+              💡 Toggle <strong>Stream: ON</strong> to make the live feed public. Toggle OFF to show the offline placeholder.<br>
+              Update the URL above when your Wyze Bridge IP changes, then click Apply.<br>
+              Settings saved in this browser — re-authenticate on a new device.
+            </div>
+
+            <div style="margin-top:1.25rem;">
+              <button class="btn-secondary" onclick="lockPanel()" style="font-size:12px; padding:8px 18px;">🔒 Lock Controls</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 Anchorage Makerspace · 1406 W 33rd Ave Unit F, Anchorage AK 99503 ·
+    <a href="visit.html">Visit</a> · <a href="contact-member.html">Join</a> · <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script>
+  var BOARD_HASH    = btoa('AMS-Board-2026'); // Change this password!
+  var streamEnabled = localStorage.getItem('ams_stream_on') === 'true';
+  var streamUrl     = localStorage.getItem('ams_stream_url') || 'http://10.0.0.16:8889/backyard/';
+  var authenticated = false;
+
+  window.addEventListener('load', function () {
+    applyStreamState();
+    document.getElementById('stream-url-input').value = streamUrl;
+  });
+
+  function applyStreamState() {
+    var iframe      = document.getElementById('stream-iframe');
+    var offline     = document.getElementById('offline-placeholder');
+    var badge       = document.getElementById('live-badge');
+    var liveLabel   = document.getElementById('live-label');
+    var switchTrack = document.getElementById('switch-track');
+    var switchLabel = document.getElementById('switch-label');
+    if (streamEnabled) {
+      iframe.src = streamUrl; iframe.style.display = 'block';
+      offline.style.display = 'none';
+      badge.classList.remove('offline'); liveLabel.textContent = 'Live';
+      if (switchTrack) { switchTrack.classList.add('on'); switchLabel.textContent = 'Stream: ON'; }
+    } else {
+      iframe.src = ''; iframe.style.display = 'none';
+      offline.style.display = 'flex';
+      badge.classList.add('offline'); liveLabel.textContent = 'Offline';
+      if (switchTrack) { switchTrack.classList.remove('on'); switchLabel.textContent = 'Stream: OFF'; }
+    }
+  }
+
+  function togglePanel() {
+    var body = document.getElementById('panel-body');
+    var chev = document.getElementById('panel-chevron');
+    body.classList.toggle('open');
+    chev.textContent = body.classList.contains('open') ? '▴' : '▾';
+  }
+
+  function authenticate() {
+    var input = document.getElementById('board-pass').value;
+    var msg   = document.getElementById('auth-msg');
+    if (btoa(input) === BOARD_HASH) {
+      authenticated = true;
+      document.getElementById('auth-section').style.display = 'none';
+      document.getElementById('board-controls').classList.add('visible');
+    } else {
+      msg.className = 'error';
+      msg.textContent = '✗ Incorrect code — try again';
+      document.getElementById('board-pass').value = '';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('board-pass').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') authenticate();
+    });
+  });
+
+  function toggleStream() {
+    if (!authenticated) return;
+    streamEnabled = !streamEnabled;
+    localStorage.setItem('ams_stream_on', streamEnabled);
+    applyStreamState();
+  }
+
+  function applyUrl() {
+    if (!authenticated) return;
+    var newUrl = document.getElementById('stream-url-input').value.trim();
+    if (newUrl) {
+      streamUrl = newUrl;
+      localStorage.setItem('ams_stream_url', streamUrl);
+      if (streamEnabled) document.getElementById('stream-iframe').src = streamUrl;
+    }
+  }
+
+  function lockPanel() {
+    authenticated = false;
+    document.getElementById('board-controls').classList.remove('visible');
+    document.getElementById('auth-section').style.display = 'block';
+    document.getElementById('board-pass').value = '';
+    document.getElementById('auth-msg').textContent = '';
+    document.getElementById('panel-body').classList.remove('open');
+    document.getElementById('panel-chevron').textContent = '▾';
+  }
+</script>
+
+</body>
+</html>

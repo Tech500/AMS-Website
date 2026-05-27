@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — Anchorage Makerspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+
+    .about-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* Page title — scoped so it doesn't fight style.css h2 */
+    .about-page-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(32px, 4.5vw, 52px);
+      font-weight: 800; line-height: 1;
+      text-transform: uppercase; letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+
+    .about-page-title em { color: #FFFFFF; font-style: normal; }
+
+    /* Intro text */
+    .about-intro {
+      font-size: 15px; color: #FFFFFF;
+      line-height: 1.75; margin-bottom: 2rem;
+      border-bottom: 1px solid var(--steel);
+      padding-bottom: 2rem;
+    }
+
+    /* Section headers */
+    .about-h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(20px, 2.2vw, 26px);
+      font-weight: 800; text-transform: uppercase;
+      color: #FFFFFF; letter-spacing: 0.05em;
+      margin: 2rem 0 0.5rem;
+    }
+
+    .about-h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--white);
+      margin: 1.25rem 0 0.2rem;
+    }
+
+    /* General paragraph text */
+    .about-wrap p {
+      font-size: 14px; color: #FFFFFF;
+      line-height: 1.75; margin: 0 0 0.5rem;
+    }
+
+    .about-wrap ul,
+    .about-wrap ol {
+      margin: 0.25rem 0 0.75rem 1.25rem;
+      padding: 0;
+    }
+
+    /* List items */
+    .about-wrap li {
+      font-size: 14px; color: #FFFFFF;
+      line-height: 1.7; margin-bottom: 0.1rem;
+    }
+
+    .about-divider {
+      border: none;
+      border-top: 1px solid var(--steel);
+      margin: 2rem 0;
+    }
+
+    /* Founders — two column plain list */
+    .name-list {
+      font-size: 14px; color: #FFFFFF;
+      line-height: 1.9;
+      columns: 2; column-gap: 2rem;
+      margin: 0.25rem 0 0.75rem;
+    }
+
+    @media (max-width: 500px) {
+      .name-list { columns: 1; }
+      .about-wrap { padding: 2rem 1.25rem 4rem; }
+    }
+
+    /* --- New styles for iframe positioning --- */
+    /* Container for the iframe */
+    .iframe-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    /* The iframe itself - Locked to 100% width and a comfortable height */
+    #about-content-iframe {
+        width: 100%;
+        height: 650px; /* Expands the window so you can scroll the entire list! */
+        border: none; 
+        overflow: auto; 
+        background-color: #222; 
+    }
+
+  </style>
+</head>
+<body id="top" style="background-image: linear-gradient(rgba(46, 204, 90, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(46, 204, 90, 0.05) 1px, transparent 1px); background-size: 40px 40px; background-color: #111111;">
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace Logo"
+      style="height:58px; width:auto; filter: drop-shadow(0 0 6px rgba(46,204,90,0.4));">
+  </a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+   <div style="position: fixed; top: 72px; right: 24px; z-index: 10; pointer-events: none;">
+    <img src="assets/AMS-Green-Logo.png" alt="AMS Logo" style="width: 140px; height: auto; opacity: 0.85; filter: drop-shadow(0 0 15px rgba(46,204,90,0.4));">
+  </div>  
+<div class="about-wrap" style="max-width: 860px; margin: 0 auto; padding: 0 24px; color: #ffffff;">
+
+    <p class="section-label" style="font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted, #888); margin-bottom: 10px;">The Makerspace</p>
+    <h1 class="about-page-title" style="font-family: 'Barlow Condensed', sans-serif; font-size: 2.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 20px; line-height: 1.15;">About <em style="color: #2ecc5a; font-style: normal;">Anchorage Makerspace</em></h1>
+    <p class="about-intro" style="font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; line-height: 1.75; color: #ffffff; margin-bottom: 2rem;">Anchorage's Makers are an enthusiastic group of hobbyists and professionals that identify with the "maker culture" — a movement which encourages experimentation and invention in the Arts and Sciences. If you like to build things (or take them apart), hack hardware, write software, design electronics, work with wood, metal, fiberglass, or plastic, grow your own food, or just look up at the stars and wonder how it all works — you're in the right place.</p>
+
+    <hr class="about-divider" style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 2rem 0;">
+
+    <h2 class="about-h2" id="core-values" style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.8rem; text-transform: uppercase; color: #2ecc5a; margin-bottom: 1.5rem;">Our Values</h2>
+
+    <h3 class="about-h3" style="font-family: 'Share Tech Mono', monospace; font-size: 1.1rem; color: #ffffff; margin-top: 1.5rem; margin-bottom: 0.5rem;">We're an Inclusive Community</h3>
+    <p style="font-family: 'Share Tech Mono', monospace; font-size: 0.80rem; line-height: 1.6; color: rgba(255,255,255,0.85);">We foster a safe, inclusive, respectful, family-friendly space that engages the diverse community of makers without regard to background, style, or perspective.</p>
+
+    <h3 class="about-h3" style="font-family: 'Share Tech Mono', monospace; font-size: 1.1rem; color: #ffffff; margin-top: 1.5rem; margin-bottom: 0.5rem;">We're an Educational Organization</h3>
+    <p style="font-family: 'Share Tech Mono', monospace; font-size: 0.80rem; line-height: 1.6; color: rgba(255,255,255,0.85);">We inspire thirst for learning, discovery, and self-improvement by teaching people how to use tools, explore their environment, and bring creations to life. Special priority is given to empowering the next generation of makers through communal development of vision, technical skills, and creative wonder.</p>
+
+    <h3 class="about-h3" style="font-family: 'Share Tech Mono', monospace; font-size: 1.1rem; color: #ffffff; margin-top: 1.5rem; margin-bottom: 0.5rem;">We Encourage Creativity</h3>
+    <p style="font-family: 'Share Tech Mono', monospace; font-size: 0.80rem; line-height: 1.6; color: rgba(255,255,255,0.85);">In order to ensure that creativity and self-expression thrive, we respect each and every member, value their unique contribution to the space, and celebrate our diverse capacities. We welcome any form of creative expression which does not compromise the inclusive, emotionally and physically safe nature of our community.</p>
+
+    <h3 class="about-h3" style="font-family: 'Share Tech Mono', monospace; font-size: 1.1rem; color: #ffffff; margin-top: 1.5rem; margin-bottom: 0.5rem;">We Enhance the Quality of Life in Our Local Community</h3>
+    <p style="font-family: 'Share Tech Mono', monospace; font-size: 0.80rem; line-height: 1.6; color: rgba(255,255,255,0.85);">AMS does more than provide community access to tools, expertise, and workspace. We serve our community by providing training, workshops, events, and activities for the general public, hosting community groups, and lending our capacities to complementary organizations throughout Alaska.</p>
+
+    <h3 class="about-h3" style="font-family: 'Share Tech Mono', monospace; font-size: 1.1rem; color: #ffffff; margin-top: 1.5rem; margin-bottom: 0.5rem;">We Support Local Innovation</h3>
+    <p style="font-family: 'Share Tech Mono', monospace; font-size: 0.80rem; line-height: 1.6; color: rgba(255,255,255,0.85);">We encourage entrepreneurship by attracting, developing, and supporting a large community of smart, creative, and experienced people with many different skills; giving them access to a workspace with sophisticated tools; and connecting these makers with the local business community.</p>
+
+    <h3 class="about-h3" style="font-family: 'Share Tech Mono', monospace; font-size: 1.1rem; color: #ffffff; margin-top: 1.5rem; margin-bottom: 0.5rem;">We're Nonprofit and Run by Volunteers</h3>
+    <p style="font-family: 'Share Tech Mono', monospace; font-size: 0.80rem; line-height: 1.6; color: rgba(255,255,255,0.85);">The Makerspace is only as good as its members make it. We seek out dedicated members who will devote their time, resources, and expertise towards sustainably fulfilling our mission for the good of current and future generations of makers.</p>
+
+    <hr class="about-divider" style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 2rem 0;">
+
+    <h2 class="about-h2" id="mission" style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.8rem; text-transform: uppercase; color: #2ecc5a; margin-bottom: 1rem;">Mission Statement</h2>
+    <p style="font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; line-height: 1.75; color: #ffffff;">Our mission is to create a cooperative community workshop in Anchorage, Alaska. The Makerspace is available and accessible as a community resource, offering a social space for makers, inventors, artists, entrepreneurs, learners, and dreamers to pool their skills, knowledge, and resources for the good of the community.</p>
+
+    <hr class="about-divider" style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 2rem 0;">
+
+    <h2 class="about-h2" id="board" style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.8rem; text-transform: uppercase; color: #2ecc5a; margin-bottom: 1rem;">Board of Directors</h2>
+    <ol style="font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; line-height: 1.75; margin-left: 20px; color: #ffffff; margin-bottom: 1.5rem;">
+      <li>Andreas Tziolas — President</li>
+      <li>Diamond Redmond — Treasurer</li>
+      <li>Rikeem Williams</li>
+      <li>Steven Fett — Chief Technology Officer</li>
+      <li>Cornelius J. Eastman</li>
+      <li>Bob Koontz</li>
+    </ol>
+
+    <h3 class="about-h3" style="font-family: 'Share Tech Mono', monospace; font-size: 1.1rem; color: #ffffff; margin-bottom: 0.5rem;">Founders</h3>
+    <div class="name-list" style="font-family: 'Share Tech Mono', monospace; font-size: 0.80rem; line-height: 1.6; color: rgba(255,255,255,0.7); column-count: 2; column-gap: 40px; margin-bottom: 2rem;">
+      Dale Rooney<br>Andreas Tziolas<br>Henry Lee<br>Jeff Blum<br>Steven Fett<br>Melanie Hedman<br>Garrett Perkins<br>Alan Sneegas<br>Katie Lee<br>Cornelius J. Eastman<br>Leon Jaimes<br>Terry H. LaGrone<br>Nick Wallette<br>Andrew Dahlin<br>John Randall<br>Diamond Redmond<br>Dane Ketner<br>Duncan Meyers<br>Dustin Mendoza<br>Robert Eachus<br>Lance Ahern<br>Chuck Colht
+    </div>
+
+    <hr class="about-divider" style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 2rem 0;">
+
+    <h2 class="about-h2" id="tools" style="font-family: 'Barlow Condensed', sans-serif; font-size: 1.8rem; text-transform: uppercase; color: #2ecc5a; margin-bottom: 0.5rem;">Tools</h2>
+    <p style="font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem;">Our toolset is constantly changing — use the scrolling container board below to see our dynamic manifest.</p>
+
+    <div id="article-panel" style="display: block; margin-top: 1.5rem; background: #1a1a1a; border: 1px solid rgba(46,204,90,0.35); border-radius: 10px; overflow: hidden; width: 100%;">
+      <div class="article-panel-header" style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1.25rem; background: rgba(46,204,90,0.10); border-bottom: 1px solid rgba(46,204,90,0.25);">
+        <span class="article-panel-title" style="font-family: 'Share Tech Mono', monospace; font-size: 0.70rem; letter-spacing: 0.12em; text-transform: uppercase; color: #2ecc5a;">⬡ Dynamic Manifest — anchoragemakerspace.com</span>
+      </div>
+      
+      <iframe id="article-frame" style="width: 100%; height: 72vh; border: none; display: block; background: #222;" srcdoc='
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <style>
+            body { background-color: #222; color: #ffffff; font-family: "Share Tech Mono", monospace; padding: 20px; margin: 0; }
+            h2 { font-family: sans-serif; color: #2ecc5a; text-transform: uppercase; font-size: 1.20rem; margin-top: 0; margin-bottom: 10px; }
+            ul { list-style-type: square; margin-left: 20px; padding: 0; line-height: 1.75; font-size: 0.85rem; margin-bottom: 0; }
+            li { margin-bottom: 6px; }
+            strong { color: #ffffff; }
+            .section { margin-bottom: 24px; border-bottom: 1px solid #333; padding-bottom: 16px; }
+            .section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+          </style>
+        </head>
+        <body>
+          <div class="section">
+            <h2>3D Printing</h2>
+            <ul>
+              <li><strong>4&times; Creality CR-10 MAX</strong> (450mm &times; 450mm &times; 470mm)</li>
+              <li><strong>2&times; Prusa i3 MK3</strong> (250mm &times; 210mm &times; 210mm)</li>
+              <li>PLA, PETG, ABS, TPU, and other filaments available in limited quantities</li>
+            </ul>
+          </div>
+          <div class="section">
+            <h2>Electronics</h2>
+            <ul>
+              <li><strong>Soldering Station</strong></li>
+              <li><strong>Reflow Heat Gun</strong></li>
+              <li><strong>Oscilloscope</strong></li>
+              <li><strong>Electronics Supplies</strong></li>
+            </ul>
+          </div>
+          <div class="section">
+            <h2>CNC Machines</h2>
+            <ul>
+              <li><strong>100W laser cutter</strong> with a 4&apos; &times; 3&apos; bed</li>
+              <li><strong>7&apos; &times; 14&apos; MultiCam CNC</strong></li>
+              <li><strong>Shapeoko 2 open source CNC mill</strong> &mdash; 12&quot; &times; 12&quot; &times; 3&quot; workspace</li>
+              <li><strong>Gerber Vinyl Cutter</strong></li>
+            </ul>
+          </div>
+          <div class="section">
+            <h2>Woodworking</h2>
+            <ul>
+              <li><strong>Table Saw</strong></li>
+              <li><strong>Drill Presses</strong></li>
+              <li><strong>Bandsaw (Wood)</strong></li>
+              <li><strong>Router Tables &times; 2</strong></li>
+              <li><strong>Miter Saw</strong></li>
+              <li><strong>Circular Saw</strong></li>
+              <li><strong>Planer</strong></li>
+              <li><strong>Biscuit Cutter</strong></li>
+              <li><strong>Hand Tools</strong></li>
+              <li><strong>4&apos; Belt Sander</strong></li>
+            </ul>
+          </div>
+          <div class="section">
+            <h2>Metalworking</h2>
+            <ul>
+              <li><strong>Welder</strong></li>
+              <li><strong>Bandsaw (Metal)</strong></li>
+            </ul>
+          </div>
+          <div class="section">
+            <h2>Automotive</h2>
+            <ul>
+              <li><strong>Floor Jack and Stands</strong></li>
+              <li><strong>Battery Charger</strong></li>
+              <li><strong>Automotive Wrench Set</strong></li>
+            </ul>
+          </div>
+          <div class="section">
+            <h2>Crafts</h2>
+            <ul>
+              <li><strong>Laser Engraver</strong></li>
+              <li><strong>Hot glue, hand tools, craft supplies</strong></li>
+            </ul>
+          </div>
+          <div class="section">
+            <h2>Computing</h2>
+            <ul>
+              <li><strong>Workstations with design software</strong></li>
+              <li><strong>Robust server for hosting and development</strong></li>
+            </ul>
+          </div>
+        </body>
+        </html>
+      '></iframe>
+    </div>
+
+    <p style="margin-top: 2rem; margin-bottom: 3rem;">
+      <a href="shop.html" class="btn-primary" style="font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: #2ecc5a; text-decoration: none; border: 1px solid rgba(46,204,90,0.5); padding: 8px 16px; border-radius: 5px; background: rgba(46,204,90,0.05); display: inline-block;">Explore the Full Shop →</a>
+    </p>
+
+  </div>
+</div>
+<footer>
+  <p>© 2026 Anchorage Makerspace · 1406 W 33rd Ave Unit F, Anchorage AK 99503 ·
+    <a href="visit.html">Visit</a> ·
+    <a href="membership.html">Join</a> ·
+    <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+</body>
+</html>

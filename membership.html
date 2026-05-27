@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Membership — Anchorage Makerspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .membership-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+
+    .membership-card {
+      background: var(--mid); border-radius: 8px;
+      padding: 2rem; border: 1px solid var(--steel);
+      position: relative; overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .membership-card:hover { border-color: var(--green); }
+
+    .membership-card.featured {
+      border-color: var(--green);
+      background: linear-gradient(135deg, rgba(46,204,90,0.07), var(--mid));
+    }
+
+    .featured-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--green); color: var(--black);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 3px;
+    }
+
+    .membership-type {
+      font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); font-weight: 600; margin-bottom: 0.5rem;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .membership-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 52px; font-weight: 800; line-height: 1;
+    }
+
+    .membership-price sup { font-size: 24px; vertical-align: top; margin-top: 8px; }
+    .membership-price sub { font-size: 18px; color: var(--muted); }
+
+    .membership-desc {
+      font-size: 14px; color: var(--muted);
+      margin: 1rem 0 1.5rem; line-height: 1.65;
+    }
+
+    .perk-list { list-style: none; margin-bottom: 2rem; }
+
+    .perk-list li {
+      font-size: 14px; color: var(--text);
+      padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .perk-list li::before {
+      content: '✓'; color: var(--green);
+      font-weight: 700; font-size: 14px; flex-shrink: 0;
+    }
+
+    .btn-full { display: block; text-align: center; width: 100%; }
+
+    /* Steps */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem; margin-top: 3rem;
+    }
+
+    .step { padding-left: 0.5rem; }
+
+    .step-number {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 68px; font-weight: 800; line-height: 1;
+      color: rgba(46,204,90,0.14); display: block; margin-bottom: -0.75rem;
+    }
+
+    .step-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px; font-weight: 700; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace Logo"
+      style="height:58px; width:auto; filter: drop-shadow(0 0 6px rgba(46,204,90,0.4));">
+  </a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+
+  <div class="page-hero" style="position:relative;">
+    <div class="page-hero-inner">
+      <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace" style="position:absolute; top:1.25rem; right:2rem; height:225px; width:auto; opacity:0.82; filter:drop-shadow(0 0 14px rgba(46,204,90,0.45)); pointer-events:none; z-index:1;">
+      <div class="section-label">Membership Options</div>
+      <h1>Choose Your <em>Plan</em></h1>
+      <p>All memberships include 24/7 keycard access to the full shop. Support a community resource that gives back to Anchorage.</p>
+    </div>
+  </div>
+
+  <!-- Membership tiers -->
+  <section>
+    <div class="section-inner">
+      <div class="section-label">Effective January 1, 2025</div>
+      <div class="membership-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+
+        <div class="membership-card featured">
+          <div class="featured-badge">Most Common</div>
+          <div class="membership-type">Individual / Family</div>
+          <div class="membership-price"><sup>$</sup>150<sub>/mo</sub></div>
+          <p class="membership-desc">Full 24/7 access for you and your family. One month vetting period, then your own key.</p>
+          <ul class="perk-list">
+            <li>24/7 keycard access after vetting</li>
+            <li>All tools & equipment areas</li>
+            <li>Discounts on classes & events</li>
+            <li>Community Slack access</li>
+            <li>Family members included</li>
+          </ul>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpmrlWpvJn-Cp8EmDsYAiGsEYqN5uuUPt3vXTJuKiE1dn36w/viewform" class="btn-primary btn-full">Join Now →</a>
+        </div>
+
+        <div class="membership-card">
+          <div class="membership-type">Student 24/7</div>
+          <div class="membership-price"><sup>$</sup>85<sub>/mo</sub></div>
+          <p class="membership-desc">For actively enrolled students 18+. Same full access at a reduced rate.</p>
+          <ul class="perk-list">
+            <li>24/7 keycard access after vetting</li>
+            <li>All tools & equipment areas</li>
+            <li>Discounts on classes & events</li>
+            <li>Community Slack access</li>
+          </ul>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpmrlWpvJn-Cp8EmDsYAiGsEYqN5uuUPt3vXTJuKiE1dn36w/viewform" class="btn-secondary btn-full">Join Now →</a>
+        </div>
+
+        <div class="membership-card">
+          <div class="membership-type">Active Military</div>
+          <div class="membership-price"><sup>$</sup>135<sub>/mo</sub></div>
+          <p class="membership-desc">Full access for active military members and their families. 24/7 key after vetting.</p>
+          <ul class="perk-list">
+            <li>24/7 keycard access after vetting</li>
+            <li>All tools & equipment areas</li>
+            <li>Family members included</li>
+            <li>Community Slack access</li>
+          </ul>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpmrlWpvJn-Cp8EmDsYAiGsEYqN5uuUPt3vXTJuKiE1dn36w/viewform" class="btn-secondary btn-full">Join Now →</a>
+        </div>
+
+        <div class="membership-card">
+          <div class="membership-type">Teacher / Educator</div>
+          <div class="membership-price"><sup>$</sup>130<sub>/mo</sub></div>
+          <p class="membership-desc">For teachers and educators. Full access with special support for classroom projects.</p>
+          <ul class="perk-list">
+            <li>24/7 keycard access after vetting</li>
+            <li>All tools & equipment areas</li>
+            <li>Support for classroom projects</li>
+            <li>Community Slack access</li>
+          </ul>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpmrlWpvJn-Cp8EmDsYAiGsEYqN5uuUPt3vXTJuKiE1dn36w/viewform" class="btn-secondary btn-full">Join Now →</a>
+        </div>
+
+        <div class="membership-card">
+          <div class="membership-type">Super User</div>
+          <div class="membership-price"><sup>$</sup>300<sub>/mo</sub></div>
+          <p class="membership-desc">Instant door code, additional privileges, and extra support for the makerspace.</p>
+          <ul class="perk-list">
+            <li>Instant 24/7 door code</li>
+            <li>Additional privileges</li>
+            <li>Priority support</li>
+            <li>All standard member perks</li>
+          </ul>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpmrlWpvJn-Cp8EmDsYAiGsEYqN5uuUPt3vXTJuKiE1dn36w/viewform" class="btn-secondary btn-full">Join Now →</a>
+        </div>
+
+        <div class="membership-card">
+          <div class="membership-type">Dedicated Workspace</div>
+          <div class="membership-price"><sup>$</sup>340<sub>/mo</sub></div>
+          <p class="membership-desc">All membership benefits plus your own dedicated workbench — keep tools and projects ready.</p>
+          <ul class="perk-list">
+            <li>Personal dedicated workbench</li>
+            <li>Leave tools & projects set up</li>
+            <li>All standard member perks</li>
+            <li>24/7 keycard access</li>
+          </ul>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpmrlWpvJn-Cp8EmDsYAiGsEYqN5uuUPt3vXTJuKiE1dn36w/viewform" class="btn-secondary btn-full">Join Now →</a>
+        </div>
+
+        <div class="membership-card">
+          <div class="membership-type">Drop-In / Visitor</div>
+          <div class="membership-price" style="font-size:32px; padding-top:10px; line-height:1.2;">Open<br>House</div>
+          <p class="membership-desc">Not ready to commit? Drop in any Monday 6–8pm — no membership required.</p>
+          <ul class="perk-list">
+            <li>Open House every Monday 6–8pm</li>
+            <li>Attend scheduled classes</li>
+            <li>Supervised equipment use</li>
+            <li>Meet the community</li>
+          </ul>
+          <a href="visit.html" class="btn-secondary btn-full">Get Directions</a>
+        </div>
+
+      </div>
+
+      <!-- Annual discount note -->
+      <div style="margin-top:1.5rem; text-align:center; font-family:'Share Tech Mono',monospace;
+        font-size:12px; color:var(--green); letter-spacing:0.1em;">
+        ✦ Significant discount available for Annual Memberships — ask us for details
+      </div>
+
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section-dark">
+    <div class="section-inner">
+      <div class="section-label">Getting Started</div>
+      <h2>How It Works</h2>
+      <div class="steps-grid">
+        <div class="step">
+          <span class="step-number">01</span>
+          <div class="step-title">Visit Open House</div>
+          <p class="step-desc">Drop in any Monday from 6–8pm. No appointment, no commitment. See the space, meet the community, try some equipment.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">02</span>
+          <div class="step-title">Fill Out the Form</div>
+          <p class="step-desc">Click Join Now and complete our Google Form registration. Choose the membership tier that fits your situation.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">03</span>
+          <div class="step-title">Sign the Waiver & Pay</div>
+          <p class="step-desc">Upload your signed waiver with the form or bring it to the shop. You'll receive an email to set up billing through Fabman.</p>
+        </div>
+        <div class="step">
+          <span class="step-number">04</span>
+          <div class="step-title">Get Your Key</div>
+          <p class="step-desc">New members have a 30-day probationary period with access during events. After that you get your own key for 24/7 access.</p>
+        </div>
+      </div>
+
+      <!-- Waiver download links -->
+      <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
+        <a href="https://www.anchoragemakerspace.com/wp-content/uploads/2014/03/AMC-Adult-Waiver-2014-01-01.pdf"
+          target="_blank" class="btn-secondary" style="font-size:12px; padding:8px 18px;">
+          📄 Download Adult Waiver
+        </a>
+        <a href="https://www.anchoragemakerspace.com/wp-content/uploads/2014/03/AMC-Minor-Waiver-2014-01-01.pdf"
+          target="_blank" class="btn-secondary" style="font-size:12px; padding:8px 18px;">
+          📄 Download Minor Waiver
+        </a>
+      </div>
+
+      <div style="margin-top:2rem; display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap;">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpmrlWpvJn-Cp8EmDsYAiGsEYqN5uuUPt3vXTJuKiE1dn36w/viewform" class="btn-primary">Start Your Application →</a>
+        <a href="contact-sponsor.html" class="btn-secondary">Sponsor AMS →</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 Anchorage Makerspace · Community Research and Development Workspace</p>
+  <p style="margin-top:6px;">1406 W 33rd Ave Unit F, Anchorage AK 99503 · <a href="mailto:info@anchoragemakerspace.com">info@anchoragemakerspace.com</a></p>
+  <p style="margin-top:6px;">
+    <a href="visit.html">Visit</a> · <a href="membership.html">Join</a> · <a href="livestream.html">Live Cam</a> · <a href="contact-member.html">Contact</a> · <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+</body>
+</html>

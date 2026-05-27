@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mission & Values — Anchorage Makerspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+
+    /* ── Value cards ── */
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .value-card {
+      background: var(--mid);
+      border: 1px solid var(--steel);
+      border-radius: 10px;
+      padding: 22px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .value-card:hover {
+      border-color: var(--green);
+      transform: translateY(-3px);
+    }
+
+    .value-card-label {
+      font-size: 0.68rem;
+      font-family: 'Share Tech Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .value-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 5px rgba(46,204,90,0.6);
+      flex-shrink: 0;
+    }
+
+    .value-icon { font-size: 26px; margin-bottom: 0.6rem; display: block; }
+
+    .value-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.25rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.03em;
+      margin-bottom: 8px; line-height: 1.15;
+      color: var(--white);
+    }
+
+    .value-desc {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.80rem; line-height: 1.75;
+      color: var(--muted);
+    }
+
+    /* ── Mission statement block ── */
+    .mission-block {
+      background: var(--mid);
+      border: 1px solid rgba(46,204,90,0.35);
+      border-left: 4px solid var(--green);
+      border-radius: 10px;
+      padding: 28px 30px;
+      margin-bottom: 2.5rem;
+    }
+
+    .mission-block-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--green);
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .mission-block-label::before {
+      content: '';
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px rgba(46,204,90,0.8);
+      animation: blink 1.4s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.15} }
+
+    .mission-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 700; line-height: 1.35;
+      color: var(--white);
+      text-transform: uppercase; letter-spacing: 0.02em;
+    }
+
+    .mission-text em { color: var(--green); font-style: normal; }
+
+    /* ── About iframe panel (mirrors blog article panel) ── */
+    #about-panel {
+      margin-top: 2.5rem;
+      background: var(--mid);
+      border: 1px solid rgba(46,204,90,0.35);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .about-panel-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      background: rgba(46,204,90,0.10);
+      border-bottom: 1px solid rgba(46,204,90,0.25);
+    }
+
+    .about-panel-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.70rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--green);
+    }
+
+    #about-frame {
+      width: 100%; height: 72vh;
+      border: none; display: block;
+      background: #fff;
+    }
+
+    .about-panel-nav {
+      display: flex; align-items: center; gap: 8px;
+      flex-wrap: wrap;
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--steel);
+      background: var(--charcoal);
+    }
+
+    .panel-nav-link {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem; color: var(--muted);
+      text-decoration: none; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border: 1px solid var(--steel);
+      border-radius: 5px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .panel-nav-link:hover {
+      color: var(--green);
+      border-color: var(--green);
+      background: rgba(46,204,90,0.08);
+    }
+
+    .mission-inner { max-width: 960px; margin: 0 auto; }
+  </style>
+</head>
+<body id="top">
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace Logo"
+      style="height:58px; width:auto; filter: drop-shadow(0 0 6px rgba(46,204,90,0.4));">
+  </a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+
+  <!-- Page Hero — mirrors blog.html -->
+  <div class="page-hero" style="position:relative;">
+    <div class="page-hero-inner">
+      <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace"
+        style="position:absolute; top:1.25rem; right:2rem;
+               height:225px; width:auto; opacity:0.82;
+               filter:drop-shadow(0 0 20px rgba(46,204,90,0.50));
+               pointer-events:none; z-index:1;">
+      <div class="section-label">Who We Are</div>
+      <h1>Mission &amp; <em>Values</em></h1>
+      <p>The principles behind Anchorage Makerspace — why we exist, what we stand for, and the community we're building together.</p>
+    </div>
+  </div>
+
+  <!-- Mission + Values -->
+  <section>
+    <div class="mission-inner">
+
+      <!-- Mission statement -->
+      <div class="mission-block">
+        <div class="mission-block-label">Our Mission</div>
+        <div class="mission-text">
+          To provide <em>Anchorage</em> with an open, inclusive workspace where anyone can <em>learn, create,</em> and <em>collaborate</em> — turning ideas into reality through access to tools, technology, and community.
+        </div>
+      </div>
+
+      <!-- Core Values -->
+      <div class="section-label" style="margin-bottom:1rem;">Core Values</div>
+
+      <div class="value-grid">
+
+        <div class="value-card">
+          <div class="value-card-label"><span class="value-dot"></span>Value // 01</div>
+          <span class="value-icon">🔓</span>
+          <div class="value-title">Open Access</div>
+          <div class="value-desc">Making it up doesn't require a degree or a budget. Our doors — and our tools — are open to everyone. Open House every Monday, no appointment needed.</div>
+        </div>
+
+        <div class="value-card">
+          <div class="value-card-label"><span class="value-dot"></span>Value // 02</div>
+          <span class="value-icon">🤝</span>
+          <div class="value-title">Community First</div>
+          <div class="value-desc">We are member-run and community-driven. Decisions are made together, knowledge is shared freely, and everyone who shows up belongs here.</div>
+        </div>
+
+        <div class="value-card">
+          <div class="value-card-label"><span class="value-dot"></span>Value // 03</div>
+          <span class="value-icon">🧠</span>
+          <div class="value-title">Lifelong Learning</div>
+          <div class="value-desc">Curiosity is the engine. We host workshops, mentorship, and hands-on training — because the best way to learn something is to build it.</div>
+        </div>
+
+        <div class="value-card">
+          <div class="value-card-label"><span class="value-dot"></span>Value // 04</div>
+          <span class="value-icon">🌍</span>
+          <div class="value-title">Local Impact</div>
+          <div class="value-desc">Rooted in Anchorage. We support Alaskan makers, entrepreneurs, students, and artists — keeping creativity and innovation close to home.</div>
+        </div>
+
+        <div class="value-card">
+          <div class="value-card-label"><span class="value-dot"></span>Value // 05</div>
+          <span class="value-icon">🔧</span>
+          <div class="value-title">Right to Repair</div>
+          <div class="value-desc">We believe in owning what you buy and fixing what breaks. The maker ethos is inseparable from sustainability and self-sufficiency.</div>
+        </div>
+
+        <div class="value-card">
+          <div class="value-card-label"><span class="value-dot"></span>Value // 06</div>
+          <span class="value-icon">⚡</span>
+          <div class="value-title">Innovation + Safety</div>
+          <div class="value-desc">Pushing limits responsibly. We encourage ambitious projects while maintaining a safe, respectful shop environment for everyone who walks through the door.</div>
+        </div>
+
+      </div>
+
+      <!-- About content panel — content sourced directly from AMS website -->
+      <div id="about-panel">
+        <div class="about-panel-header">
+          <span class="about-panel-title">⬡ About — anchoragemakerspace.com</span>
+        </div>
+        <iframe id="about-frame"
+          title="About Anchorage Makerspace"
+          srcdoc="<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Share+Tech+Mono&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d1117;
+    color: #c9d1d9;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    padding: 2rem 2.5rem 3rem;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.4rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    color: #ffffff; margin-bottom: 0.4rem; line-height: 1.1;
+  }
+  h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: #ffffff; margin: 2rem 0 0.6rem;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(46,204,90,0.25);
+  }
+  h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.15rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: #ffffff; margin: 1.4rem 0 0.4rem;
+  }
+  p { margin-bottom: 0.9rem; color: #ffffff; }
+  strong { color: #ffffff; }
+  ul, ol { padding-left: 1.4rem; margin-bottom: 0.9rem; }
+  li { margin-bottom: 0.3rem; color: #ffffff; }
+  a { color: #2ecc5a; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  hr {
+    border: none;
+    border-top: 1px solid rgba(46,204,90,0.2);
+    margin: 0.5rem 0 1.5rem;
+  }
+  .section-rule { height:1px; background:rgba(46,204,90,0.15); margin:2rem 0; }
+</style>
+</head>
+<body>
+
+<h1>About the Makerspace</h1>
+<hr/>
+
+<p>Anchorage's Makers are an enthusiastic group of hobbyists and professionals that identify with the &ldquo;maker culture&rdquo; — a movement which encourages experimentation and invention in The Arts and Sciences. The strength of a group is in its members, so if you like to build things (or take them apart), hack hardware, write software, design electronics, work with wood, metal, fiberglass, or plastic, grow your own food, or just look up at the stars and wonder how it all works&hellip; well, you're in the right place.</p>
+
+<h2>Tools</h2>
+<p>Our toolset is constantly changing, so visit the shop to see everything we have on hand.</p>
+
+<p>3D Printing:</p>
+<ul>
+  <li>4&times; Creality CR-10 MAX 3D Printers (450&thinsp;mm &times; 450&thinsp;mm &times; 470&thinsp;mm)</li>
+  <li>2&times; Prusa i3 MK3 (250&thinsp;mm &times; 210&thinsp;mm &times; 210&thinsp;mm)</li>
+  <li>PLA, PETG, ABS, TPU, and other filaments available in limited quantities</li>
+</ul>
+
+<p>Electronics:</p>
+<ul>
+  <li>Soldering Station</li>
+  <li>Reflow Heat Gun</li>
+  <li>Oscilloscope</li>
+  <li>Electronics Supplies</li>
+</ul>
+
+<p>CNC Machines:</p>
+<ul>
+  <li>100W laser cutter with a 4&prime;&times;3&prime; bed</li>
+  <li>7&prime;&times;14&prime; MultiCam CNC</li>
+  <li>Shapeoko 2 open-source CNC mill (12&Prime;&times;12&Prime;&times;3&Prime; workspace)</li>
+</ul>
+
+<p>Woodworking:</p>
+<ul>
+  <li>Table Saw</li><li>Drill Presses</li><li>Bandsaw (Wood)</li>
+  <li>Router Tables &times;2</li><li>Miter Saw</li><li>Circular Saw</li>
+  <li>Planer</li><li>Band Saw</li><li>Biscuit Cutter</li>
+  <li>Hand Tools</li><li>4&prime; Belt Sander</li>
+</ul>
+
+<p>Metalworking:</p>
+<ul><li>Welder</li><li>Bandsaw (Metal)</li></ul>
+
+<p>Automotive:</p>
+<ul>
+  <li>Floor Jack and Stands</li>
+  <li>Battery Charger</li>
+  <li>Automotive Wrench Set</li>
+</ul>
+
+<p>Crafts:</p>
+<ul>
+  <li>Gerber Vinyl Cutter</li>
+  <li>Laser Engraver</li>
+  <li>Hot glue, hand tools, craft supplies</li>
+</ul>
+
+<p>Computing:</p>
+<ul>
+  <li>Workstations with design software</li>
+  <li>Robust server for hosting and development</li>
+</ul>
+
+<div class='section-rule'></div>
+<h2>Mission Statement &amp; Values</h2>
+
+<h3>Mission Statement</h3>
+<p>Our mission is to create a cooperative community workshop in Anchorage, Alaska. The Makerspace is available and accessible as a community resource, offering a social space for makers, inventors, artists, entrepreneurs, learners, and dreamers to pool their skills, knowledge and resources for the good of the community.</p>
+
+<h3>Our Values</h3>
+<p><strong>We&rsquo;re an inclusive community</strong> &mdash; We foster a safe, inclusive, respectful, family-friendly space that engages the diverse community of makers without regard to background, style, or perspective.</p>
+<p><strong>We&rsquo;re an educational organization</strong> &mdash; We inspire thirst for learning, discovery and self-improvement by teaching people how to use tools, explore their environment, and bring creations to life; special priority is given to empowering the next generation of makers through communal development of vision, technical skills, and creative wonder.</p>
+<p><strong>We encourage creativity</strong> &mdash; In order to ensure that creativity and self-expression thrive, we respect each and every member, value their unique contribution to the space and celebrate our diverse capacities. We welcome any form of creative expression which does not compromise the inclusive, emotionally and physically safe nature of our community.</p>
+<p><strong>We enhance the quality of life in our local community</strong> &mdash; While many people enjoy spending their leisure time making, fixing or creating things, AMS does more than provide community access to tools, expertise and workspace; we also serve our community by working to provide training, workshops, events and activities for the general public, hosting community groups, and lending our capacities to complementary organizations throughout Alaska.</p>
+<p><strong>We support local innovation</strong> &mdash; We encourage entrepreneurship by: attracting, developing and supporting a large community of smart, creative and experienced people with many different skills; giving them access to a workspace with sophisticated tools; and connecting these makers with the local business community.</p>
+<p><strong>We&rsquo;re nonprofit and run by volunteers</strong> &mdash; The Makerspace is only as good as its members make it. We seek out dedicated members who will devote their time, resources and expertise towards sustainably fulfilling our mission for the good of current and future generations of makers.</p>
+
+<div class='section-rule'></div>
+<h2>Board and Founders</h2>
+<p>Proudly serving on the AMS Board of Directors:</p>
+<ol>
+  <li>Andreas Tziolas (President)</li>
+  <li>Diamond Redmond (Treasurer)</li>
+  <li>Rikeem Williams</li>
+  <li>Steven Fett (Chief Technology Officer)</li>
+  <li>Corny Eastman</li>
+  <li>Bob Koontz</li>
+</ol>
+
+<p>The Founders of the AMS:</p>
+<ol>
+  <li>Dale Rooney</li><li>Andreas Tziolas</li><li>Henry Lee</li>
+  <li>Jeff Blum</li><li>Steven Fett</li><li>Melanie Hedman</li>
+  <li>Garrett Perkins</li><li>Alan Sneegas</li><li>Katie Lee</li>
+  <li>Cornelius J. Eastman</li><li>Leon Jaimes</li><li>Terry H. LaGrone</li>
+  <li>Nick Wallette</li><li>Andrew Dahlin</li><li>John Randall</li>
+  <li>Diamond Redmond</li><li>Dane Ketner</li><li>Duncan Meyers</li>
+  <li>Dustin Mendoza</li><li>Robert Eachus</li><li>Lance Ahern</li>
+  <li>Chuck Colht</li>
+</ol>
+
+</body></html>">
+        </iframe>
+        <div class="about-panel-nav">
+          <a class="panel-nav-link" href="#top">↑ Back to Top</a>
+          <a class="panel-nav-link" href="index.html">⌂ AMS Home</a>
+          <a class="panel-nav-link" href="membership.html">Join AMS →</a>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 Anchorage Makerspace · Community Research and Development Workspace</p>
+  <p style="margin-top:6px;">1406 W 33rd Ave Unit F, Anchorage AK 99503 ·
+    <a href="mailto:info@anchoragemakerspace.com">info@anchoragemakerspace.com</a></p>
+  <p style="margin-top:6px;">
+    <a href="visit.html">Visit</a> ·
+    <a href="membership.html">Join</a> ·
+    <a href="livestream.html">Live Cam</a> ·
+    <a href="contact-member.html">Contact</a> ·
+    <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/chatbot.js"></script>
+</body>
+</html>

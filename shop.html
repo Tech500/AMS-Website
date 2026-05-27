@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Shop — Anchorage Makerspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+      background: var(--steel);
+      border: 2px solid var(--steel);
+      border-radius: 8px; overflow: hidden;
+    }
+
+    .shop-card {
+      background: var(--mid);
+      aspect-ratio: 4/3;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .shop-card:hover { transform: scale(1.02); z-index: 2; }
+
+    .shop-card-bg {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px;
+      background: var(--charcoal);
+    }
+
+    .shop-card-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -60deg, transparent, transparent 8px,
+        rgba(255,255,255,0.018) 8px, rgba(255,255,255,0.018) 9px
+      );
+    }
+
+    .shop-icon { font-size: 44px; opacity: 0.22; }
+
+    .photo-tag {
+      position: absolute; top: 10px; right: 10px;
+      background: rgba(46,204,90,0.80);
+      font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 700; color: var(--black);
+      padding: 3px 8px; border-radius: 3px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .shop-card-info {
+      position: relative; z-index: 2;
+      background: linear-gradient(transparent, rgba(0,0,0,0.92) 40%);
+      padding: 1.5rem 1.25rem 1.25rem;
+    }
+
+    .shop-card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.03em;
+    }
+
+    .shop-card-desc { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    .shop-card-tag {
+      display: inline-block; margin-top: 8px;
+      background: rgba(46,204,90,0.18);
+      border: 1px solid rgba(46,204,90,0.35);
+      color: var(--green); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 600; padding: 2px 8px; border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace Logo"
+      style="height:58px; width:auto; filter: drop-shadow(0 0 6px rgba(46,204,90,0.4));">
+  </a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+
+  <div class="page-hero" style="position:relative;">
+    <div class="page-hero-inner">
+      <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace" style="position:absolute; top:1.25rem; right:2rem; height:225px; width:auto; opacity:0.82; filter:drop-shadow(0 0 14px rgba(46,204,90,0.45)); pointer-events:none; z-index:1;">
+      <div class="section-label">What's Inside</div>
+      <h1>The <em>Shop</em></h1>
+      <p>5,000 sq ft packed with professional equipment across nine specialty areas. Whatever you're building, we have the tools.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <div class="shop-grid">
+
+        <div class="shop-card">
+          <div class="shop-card-bg"><span class="shop-icon">🪵</span></div>
+          <span class="photo-tag">📷 Photo Coming</span>
+          <div class="shop-card-info">
+            <div class="shop-card-title">Woodshop</div>
+            <div class="shop-card-desc">Table saw, band saw, router table, lathe, jointer, hand tools</div>
+            <span class="shop-card-tag">Wood & Craft</span>
+          </div>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-card-bg"><span class="shop-icon">🖨️</span></div>
+          <span class="photo-tag">📷 Photo Coming</span>
+          <div class="shop-card-info">
+            <div class="shop-card-title">3D Printing</div>
+            <div class="shop-card-desc">FDM & resin printers, design workstations, filament library</div>
+            <span class="shop-card-tag">Digital Fabrication</span>
+          </div>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-card-bg"><span class="shop-icon">🔦</span></div>
+          <span class="photo-tag">📷 Photo Coming</span>
+          <div class="shop-card-info">
+            <div class="shop-card-title">Laser Cutter</div>
+            <div class="shop-card-desc">Professional CO₂ laser, large format engraving bed</div>
+            <span class="shop-card-tag">Precision Cutting</span>
+          </div>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-card-bg"><span class="shop-icon">🔩</span></div>
+          <span class="photo-tag">📷 Photo Coming</span>
+          <div class="shop-card-info">
+            <div class="shop-card-title">CNC Router</div>
+            <div class="shop-card-desc">Large-bed CNC for precise routing, milling, and carving</div>
+            <span class="shop-card-tag">Digital Fabrication</span>
+          </div>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-card-bg"><span class="shop-icon">🔥</span></div>
+          <span class="photo-tag">📷 Photo Coming</span>
+          <div class="shop-card-info">
+            <div class="shop-card-title">Welding</div>
+            <div class="shop-card-desc">MIG, TIG & stick welding, dedicated metal work area</div>
+            <span class="shop-card-tag">Metal Shop</span>
+          </div>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-card-bg"><span class="shop-icon">🧵</span></div>
+          <span class="photo-tag">📷 Photo Coming</span>
+          <div class="shop-card-info">
+            <div class="shop-card-title">Textiles & Sewing</div>
+            <div class="shop-card-desc">Sewing machines, sergers, embroidery, pattern tools</div>
+            <span class="shop-card-tag">Soft Crafts</span>
+          </div>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-card-bg"><span class="shop-icon">⚡</span></div>
+          <span class="photo-tag">📷 Photo Coming</span>
+          <div class="shop-card-info">
+            <div class="shop-card-title">Electronics & Robotics</div>
+            <div class="shop-card-desc">Soldering, oscilloscopes, Arduino, Raspberry Pi, test gear</div>
+            <span class="shop-card-tag">Tech Lab</span>
+          </div>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-card-bg"><span class="shop-icon">🖼️</span></div>
+          <span class="photo-tag">📷 Photo Coming</span>
+          <div class="shop-card-info">
+            <div class="shop-card-title">Large Format Print</div>
+            <div class="shop-card-desc">Wide-format printers, vinyl cutting, design software</div>
+            <span class="shop-card-tag">Print & Design</span>
+          </div>
+        </div>
+
+        <div class="shop-card">
+          <div class="shop-card-bg"><span class="shop-icon">🎨</span></div>
+          <span class="photo-tag">📷 Photo Coming</span>
+          <div class="shop-card-info">
+            <div class="shop-card-title">Open Studio</div>
+            <div class="shop-card-desc">Large event space for classes, workshops & community meetups</div>
+            <span class="shop-card-tag">Community Space</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:3rem; text-align:center;">
+        <a href="membership.html" class="btn-primary">Get Access to All of This →</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 Anchorage Makerspace · Community Research and Development Workspace</p>
+  <p style="margin-top:6px;">1406 W 33rd Ave Unit F, Anchorage AK 99503 · <a href="mailto:info@anchoragemakerspace.com">info@anchoragemakerspace.com</a></p>
+  <p style="margin-top:6px;">
+    <a href="visit.html">Visit</a> · <a href="membership.html">Join</a> · <a href="livestream.html">Live Cam</a> · <a href="contact-member.html">Contact</a> · <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+</body>
+</html>

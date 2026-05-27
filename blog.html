@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog — Anchorage Makerspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .blog-card {
+      background: var(--mid);
+      border: 1px solid var(--steel);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .blog-card:hover { border-color: var(--green); }
+
+    .card-label {
+      font-size: 0.68rem;
+      font-family: 'Share Tech Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-label-left { display: flex; align-items: center; gap: 8px; }
+
+    .loading-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      animation: blink 1.4s infinite; flex-shrink: 0;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.15} }
+
+    .post-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.25rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.03em;
+      margin-bottom: 8px; line-height: 1.15;
+    }
+
+    .post-excerpt {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.80rem; line-height: 1.75;
+      color: var(--green); white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .post-excerpt.expanded { max-height: 600px; }
+
+    .post-footer {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-top: 12px; flex-wrap: wrap; gap: 8px;
+    }
+
+    .post-meta {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem; color: var(--muted);
+    }
+
+    .read-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem; color: var(--green);
+      background: none; border: 1px solid var(--steel);
+      border-radius: 5px; padding: 5px 14px;
+      cursor: pointer; letter-spacing: 0.08em;
+      transition: border-color 0.2s, background 0.2s;
+      text-transform: uppercase;
+    }
+
+    .read-btn:hover { border-color: var(--green); background: var(--green-dim); }
+
+    .full-link {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem; color: var(--muted);
+      text-decoration: none; letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--steel); padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .full-link:hover { color: var(--green); border-color: var(--green); }
+
+    #loading-card {
+      background: var(--mid); border: 1px solid var(--steel);
+      border-radius: 10px; padding: 28px 24px; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    #loading-card .loading-dot { width: 10px; height: 10px; }
+
+    #loading-card span {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.82rem; color: var(--muted); letter-spacing: 0.08em;
+    }
+
+    #post-count {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.70rem; color: var(--muted);
+      text-align: right; margin-bottom: 14px; letter-spacing: 0.06em;
+    }
+
+    .blog-inner { max-width: 860px; margin: 0 auto; }
+
+    .post-nav {
+      display: none;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-top: 1px solid var(--steel);
+      margin-top: 14px;
+      padding-top: 12px;
+    }
+
+    .post-nav.visible { display: flex; }
+
+    .post-nav-link {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem; color: var(--muted);
+      text-decoration: none; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border: 1px solid var(--steel);
+      border-radius: 5px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .post-nav-link:hover {
+      color: var(--green);
+      border-color: var(--green);
+      background: rgba(46,204,90,0.08);
+    }
+
+    /* ── Article iframe panel ── */
+    #article-panel {
+      display: none;
+      margin-top: 2rem;
+      background: var(--mid);
+      border: 1px solid rgba(46,204,90,0.35);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #article-panel.open { display: block; }
+
+    .article-panel-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      background: rgba(46,204,90,0.10);
+      border-bottom: 1px solid rgba(46,204,90,0.25);
+    }
+
+    .article-panel-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.70rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--green);
+    }
+
+    .article-close-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.70rem; color: var(--muted);
+      background: none; border: 1px solid var(--steel);
+      border-radius: 4px; padding: 4px 12px;
+      cursor: pointer; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .article-close-btn:hover { color: var(--green); border-color: var(--green); }
+
+    #article-frame {
+      width: 100%; height: 72vh;
+      border: none; display: block;
+      background: #fff;
+    }
+
+    .article-panel-nav {
+      display: flex; align-items: center; gap: 8px;
+      flex-wrap: wrap;
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--steel);
+      background: var(--charcoal);
+    }
+  </style>
+</head>
+<body id="top">
+
+<nav>
+  <a href="index.html" class="nav-logo"></a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+
+  <div class="page-hero" style="position:relative;">
+    <div class="page-hero-inner">
+      <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace" style="position:absolute; top:1.25rem; right:2rem; height:225px; width:auto; opacity:0.82; filter:drop-shadow(0 0 20px rgba(46,204,90,0.50)); pointer-events:none; z-index:1;">
+      <div class="section-label">From the Community</div>
+      <h1>Community <em>Blog</em></h1>
+      <p>News, project recaps, tech commentary and maker stories from the Anchorage Makerspace community.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="blog-inner">
+
+      <div id="loading-card">
+        <div class="loading-dot"></div>
+        <span>Fetching latest posts...</span>
+      </div>
+
+      <div id="posts-container"></div>
+      <div id="post-count"></div>
+
+      <!-- Article iframe panel -->
+      <div id="article-panel">
+        <div class="article-panel-header">
+          <span class="article-panel-title">⬡ Viewing Article — anchoragemakerspace.com</span>
+          <button class="article-close-btn" onclick="closeArticle()">✕ Close</button>
+        </div>
+        <iframe id="article-frame" src="" title="Article"></iframe>
+        <div class="article-panel-nav">
+          <a class="post-nav-link" href="#article-panel">↑ Top of Article</a>
+          <a class="post-nav-link" href="#top">← Blog List</a>
+          <a class="post-nav-link" href="index.html">⌂ AMS Home</a>
+          <a class="post-nav-link" href="membership.html">Join AMS →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 Anchorage Makerspace · Community Research and Development Workspace</p>
+  <p style="margin-top:6px;">1406 W 33rd Ave Unit F, Anchorage AK 99503 · <a href="mailto:info@anchoragemakerspace.com">info@anchoragemakerspace.com</a></p>
+  <p style="margin-top:6px;">
+    <a href="visit.html">Visit</a> · <a href="membership.html">Join</a> · <a href="livestream.html">Live Cam</a> · <a href="contact-member.html">Contact</a> · <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script>
+  window.addEventListener('load', fetchPosts);
+
+  var WP_API = 'https://www.anchoragemakerspace.com/wp-json/wp/v2/posts?per_page=8&_embed';
+
+  function fetchPosts() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (this.readyState == 4) {
+        document.getElementById('loading-card').style.display = 'none';
+        if (this.status == 200) {
+          renderPosts(JSON.parse(this.responseText));
+        } else {
+          renderFallback();
+        }
+      }
+    };
+    xhr.open('GET', WP_API, true);
+    xhr.send();
+  }
+
+  function renderPosts(posts) {
+    var container = document.getElementById('posts-container');
+    posts.forEach(function (post, i) {
+      var rawDate = post.date_gmt || post.date;
+      var date    = new Date(rawDate).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+      var title   = decodeEntities(typeof post.title === 'string' ? post.title : post.title.rendered);
+      var rawExc  = typeof post.excerpt === 'string' ? post.excerpt : post.excerpt.rendered;
+      var excerpt = stripTags(decodeEntities(rawExc)).trim();
+      var link    = post.link;
+      var excId   = 'exc-' + i;
+      var btnId   = 'btn-' + i;
+
+      var navId  = 'nav-' + i;
+
+      var card = document.createElement('div');
+      card.className = 'blog-card';
+      card.innerHTML =
+        '<div class="card-label">' +
+          '<div class="card-label-left">' +
+            '<div class="loading-dot"></div>' +
+            '<span>Post // ' + String(i+1).padStart(2,'0') + '</span>' +
+          '</div>' +
+          '<span>' + date + '</span>' +
+        '</div>' +
+        '<div class="post-title">' + title + '</div>' +
+        '<div class="post-excerpt" id="' + excId + '">' + excerpt + '</div>' +
+        '<div class="post-footer">' +
+          '<button class="full-link" style="background:none;border:none;cursor:pointer;padding:0;" onclick="openArticle(\'' + link + '\')">→ Read full post in panel</button>' +
+          '<button class="read-btn" id="' + btnId + '" onclick="toggle(\'' + excId + '\',\'' + btnId + '\',\'' + navId + '\')">Expand ▾</button>' +
+        '</div>' +
+        '<div class="post-nav" id="' + navId + '">' +
+          '<a class="post-nav-link" href="#top">↑ Back to Top</a>' +
+          '<a class="post-nav-link" href="blog.html">← Blog Home</a>' +
+          '<button class="post-nav-link" style="cursor:pointer;" onclick="openArticle(\'' + link + '\')">⬡ Open in Panel →</button>' +
+        '</div>';
+      container.appendChild(card);
+    });
+    document.getElementById('post-count').textContent = posts.length + ' posts loaded';
+  }
+
+  function openArticle(url) {
+    var panel = document.getElementById('article-panel');
+    var frame = document.getElementById('article-frame');
+    frame.src = url;
+    panel.classList.add('open');
+    // Scroll to panel
+    setTimeout(function() {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  function closeArticle() {
+    var panel = document.getElementById('article-panel');
+    var frame = document.getElementById('article-frame');
+    panel.classList.remove('open');
+    frame.src = '';
+    document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function toggle(excId, btnId, navId) {
+    var el  = document.getElementById(excId);
+    var btn = document.getElementById(btnId);
+    var nav = document.getElementById(navId);
+    var expanded = el.classList.toggle('expanded');
+    btn.textContent = expanded ? 'Collapse ▴' : 'Expand ▾';
+    if (nav) nav.classList.toggle('visible', expanded);
+  }
+
+  function renderFallback() {
+    var fallback = [
+      { date:'2026-03-02', title:{ rendered:'IKEA Goes All-In on Matter: What This Means for Your Smart Home' },
+        excerpt:{ rendered:'IKEA has announced full Matter protocol support across its DIRIGERA hub ecosystem. Your IKEA smart bulbs, blinds, and sensors can now talk directly to Apple Home, Google Home, and Amazon Alexa without a proprietary bridge — a big win for the open smart-home standard.' },
+        link:'https://www.anchoragemakerspace.com/2026/03/02/ikea-goes-all-in-on-matter-what-this-means-for-your-smart-home/' },
+      { date:'2026-02-09', title:{ rendered:'Taking Back Your Tech: The Fight for Device Ownership' },
+        excerpt:{ rendered:'Right-to-repair legislation is gaining momentum across the US. This post explores what device ownership really means, why manufacturers resist repairability, and how the maker community is at the forefront of pushing back.' },
+        link:'https://www.anchoragemakerspace.com/2026/02/09/taking-back-your-tech-the-fight-for-device-ownership/' },
+      { date:'2026-02-08', title:{ rendered:'Join Us Every Week: Anchorage Makerspace New Event Lineup' },
+        excerpt:{ rendered:'We\'ve refreshed our weekly schedule with new recurring events: Monday Open House (6–8pm, free, no appointment), Wednesday Electronics Night, and Friday Build Sessions. Drop in and see what people are building.' },
+        link:'https://www.anchoragemakerspace.com/2026/02/08/join-us-every-week-anchorage-makerspace-new-event-lineup/' },
+      { date:'2025-11-14', title:{ rendered:'Introduction to CNC Routing — Workshop Recap' },
+        excerpt:{ rendered:'Last month\'s CNC workshop drew 14 attendees ranging from beginners to experienced woodworkers. Participants learned toolpath generation in Fusion 360, material hold-down strategies, and feed/speed basics.' },
+        link:'https://www.anchoragemakerspace.com/_blog/' },
+      { date:'2025-09-20', title:{ rendered:'Laser Cutter Upgraded — Now with Larger Bed' },
+        excerpt:{ rendered:'Our CO2 laser cutter has been upgraded to a 24"×36" cutting bed — nearly double the previous workspace. Members can now engrave full-size cutting boards, larger acrylic panels, and custom signage in a single pass.' },
+        link:'https://www.anchoragemakerspace.com/_blog/' },
+      { date:'2025-07-04', title:{ rendered:'Summer Build Challenge — Results Are In' },
+        excerpt:{ rendered:'Sixteen members entered this summer\'s build challenge themed "Alaska-Inspired." Projects ranged from a hand-laminated kayak paddle to a 3D-printed topographic map of Denali with embedded LEDs.' },
+        link:'https://www.anchoragemakerspace.com/_blog/' }
+    ];
+
+    var note = document.createElement('div');
+    note.style.cssText = 'font-family:"Share Tech Mono",monospace;font-size:0.68rem;color:var(--muted);' +
+      'letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;';
+    note.innerHTML = '<span style="color:#e8a020;">⚠</span> API offline — showing cached posts &nbsp;·&nbsp;' +
+      '<a href="https://www.anchoragemakerspace.com/_blog/" style="color:var(--green);text-decoration:none;" target="_blank">live blog →</a>';
+    document.getElementById('posts-container').appendChild(note);
+    renderPosts(fallback);
+  }
+
+  function stripTags(html) {
+    var d = document.createElement('div'); d.innerHTML = html;
+    return d.textContent || d.innerText || '';
+  }
+
+  function decodeEntities(str) {
+    var t = document.createElement('textarea'); t.innerHTML = str; return t.value;
+  }
+</script>
+
+</body>
+</html>

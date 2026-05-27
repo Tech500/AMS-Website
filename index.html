@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anchorage Makerspace — Community Research and Development Workspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* ── Hero — sized to content, not viewport ── */
+    .hero {
+      min-height: 0;
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+      padding-bottom: 3rem;
+      box-sizing: border-box;
+    }
+
+    .hero-glow {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(46,204,90,0.10) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    /* Right-side image strip */
+    .hero-image-strip {
+      position: absolute; right: 0; top: 64px; bottom: 0; width: 46%;
+      display: grid; grid-template-rows: repeat(3, 1fr); gap: 4px;
+      opacity: 0.65;
+    }
+
+    .hero-img-ph {
+      background: var(--mid);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+      border-left: 3px solid var(--green);
+      position: relative; overflow: hidden;
+    }
+
+    .hero-img-ph::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent, transparent 10px,
+        rgba(255,255,255,0.02) 10px, rgba(255,255,255,0.02) 11px
+      );
+    }
+
+    .ph-icon  { font-size: 34px; opacity: 0.3; }
+    .ph-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+                color: var(--muted); font-family: 'Share Tech Mono', monospace; }
+    .ph-hint  { font-size: 9px; color: var(--steel);
+                padding: 2px 8px; background: rgba(46,204,90,0.15);
+                border-radius: 3px; letter-spacing: 0.05em; }
+
+    /* Left content */
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 560px;
+      padding: 0 2rem 0 8vw;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(46,204,90,0.12);
+      border: 1px solid rgba(46,204,90,0.35);
+      border-radius: 4px; padding: 4px 12px;
+      font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase;
+      color: var(--green); font-weight: 600; margin-bottom: 0.6rem;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #4CAF50;
+      box-shadow: 0 0 6px rgba(76,175,80,0.8);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; } 50% { opacity: 0.35; }
+    }
+
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(38px, 5vw, 62px);
+      font-weight: 800; line-height: 0.93;
+      text-transform: uppercase; letter-spacing: -0.01em;
+      margin-bottom: 0.65rem;
+    }
+
+    h1 em { color: var(--green); font-style: normal; }
+
+    .hero-sub {
+      font-size: 14px; color: var(--text);
+      line-height: 1.55; margin-bottom: 1rem; max-width: 400px;
+    }
+
+    .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+
+    .hero-stats { display: flex; gap: 1.75rem; }
+
+    .hero-stat strong {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px; font-weight: 800; color: var(--green); line-height: 1;
+    }
+
+    .hero-stat span {
+      font-size: 10px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+
+    /* ── Scroll-down cue ── */
+    .scroll-cue {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      z-index: 10;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .scroll-cue:hover { opacity: 1; }
+
+    .scroll-cue-arrow {
+      width: 22px; height: 22px;
+      border-right: 2px solid var(--green);
+      border-bottom: 2px solid var(--green);
+      transform: rotate(45deg);
+      animation: bounce 1.8s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50%       { transform: rotate(45deg) translateY(6px); }
+    }
+
+    /* ── Open House Banner (green bar) — immediately below hero ── */
+    /* Inherits .open-banner from style.css — no changes needed */
+
+    @media (max-width: 768px) {
+      .hero-image-strip { display: none; }
+      .hero-content { padding: 2rem 1.5rem; }
+      h1 { font-size: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace Logo"
+      style="height:58px; width:auto; filter: drop-shadow(0 0 6px rgba(46,204,90,0.4));">
+  </a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+
+  <!-- Hero — full viewport height -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+
+    <div class="hero-image-strip">
+      <div class="hero-img-ph">
+        <span class="ph-icon">🪵</span>
+        <span class="ph-label">Woodshop</span>
+        <span class="ph-hint">📷 Photo placeholder</span>
+      </div>
+      <div class="hero-img-ph">
+        <span class="ph-icon">🔦</span>
+        <span class="ph-label">Laser Cutter</span>
+        <span class="ph-hint">📷 Photo placeholder</span>
+      </div>
+      <div class="hero-img-ph">
+        <span class="ph-icon">🖨️</span>
+        <span class="ph-label">3D Printing</span>
+        <span class="ph-hint">📷 Photo placeholder</span>
+      </div>
+    </div>
+
+    <div class="hero-content">
+
+      <!-- AMS logo -->
+      <div style="margin-bottom:0.6rem;">
+        <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace"
+          style="height:135px; width:auto;
+            filter: drop-shadow(0 0 20px rgba(46,204,90,0.5));
+            animation: pulse 3s infinite;">
+      </div>
+
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Open Now · 1406 W 33rd Ave, Anchorage
+      </div>
+
+      <h1>Build<br><em>Something</em><br>Great.</h1>
+
+      <p class="hero-sub">Community Research and Development Workspace — 5,000 sq ft of tools, tech, and makers. Open to everyone.</p>
+
+      <div class="hero-actions">
+        <a href="membership.html" class="btn-primary">Become a Member →</a>
+        <a href="visit.html" class="btn-secondary">Visit Open House</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>5,000</strong>
+          <span>sq ft workshop</span>
+        </div>
+        <div class="hero-stat">
+          <strong>24/7</strong>
+          <span>member access</span>
+        </div>
+        <div class="hero-stat">
+          <strong>Free</strong>
+          <span>open house Mon</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Open House Banner — first thing visible after scrolling -->
+  <div class="open-banner" id="open-banner">
+    <p>🔓 Open House Every Monday 6–8pm — No appointment needed!</p>
+    <a href="visit.html">Get directions →</a>
+  </div>
+
+</div><!-- /page-content -->
+
+<footer>
+  <p>© 2026 Anchorage Makerspace · 1406 W 33rd Ave Unit F, Anchorage AK 99503 ·
+    <a href="visit.html">Visit</a> ·
+    <a href="membership.html">Join</a> ·
+    <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+<script src="assets/chatbot.js"></script>
+</body>
+</html>

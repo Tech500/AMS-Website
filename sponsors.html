@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sponsors — Anchorage Makerspace</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* ── Section headers ── */
+    .sponsor-section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.6rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    .sponsor-section-sub {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem; color: var(--muted);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Corporate sponsor grid ── */
+    .sponsor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .sponsor-card {
+      background: var(--mid);
+      border: 1px solid var(--steel);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column;
+    }
+
+    .sponsor-card:hover {
+      border-color: var(--green);
+      transform: translateY(-3px);
+    }
+
+    /* Logo placeholder area */
+    .sponsor-logo-wrap {
+      background: var(--charcoal);
+      border-bottom: 1px solid var(--steel);
+      height: 160px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 10px; position: relative; overflow: hidden;
+    }
+
+    .sponsor-logo-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent, transparent 10px,
+        rgba(255,255,255,0.015) 10px, rgba(255,255,255,0.015) 11px
+      );
+    }
+
+    /* When a real logo img is placed inside, hide the placeholder text */
+    .sponsor-logo-wrap img {
+      max-width: 80%; max-height: 120px;
+      object-fit: contain; position: relative; z-index: 1;
+    }
+
+    .logo-ph-icon { font-size: 36px; opacity: 0.2; position: relative; z-index: 1; }
+
+    .logo-ph-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--steel);
+      position: relative; z-index: 1;
+    }
+
+    .photo-tag {
+      position: absolute; top: 10px; right: 10px; z-index: 2;
+      background: rgba(46,204,90,0.75);
+      font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 700; color: var(--black);
+      padding: 3px 8px; border-radius: 3px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* Card info footer */
+    .sponsor-card-info {
+      padding: 1rem 1.25rem 1.25rem;
+      flex: 1; display: flex; flex-direction: column; justify-content: space-between;
+    }
+
+    .sponsor-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.25rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.03em;
+      margin-bottom: 4px;
+    }
+
+    .sponsor-tier-badge {
+      display: inline-block;
+      background: rgba(46,204,90,0.15);
+      border: 1px solid rgba(46,204,90,0.35);
+      color: var(--green);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.14em;
+      text-transform: uppercase; font-weight: 700;
+      padding: 3px 10px; border-radius: 3px;
+      margin-top: 6px; align-self: flex-start;
+    }
+
+    /* ── In-kind grid (slightly smaller cards) ── */
+    .inkind-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .inkind-card {
+      background: var(--mid);
+      border: 1px solid var(--steel);
+      border-radius: 10px; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column;
+    }
+
+    .inkind-card:hover {
+      border-color: var(--green);
+      transform: translateY(-3px);
+    }
+
+    .inkind-logo-wrap {
+      background: var(--charcoal);
+      border-bottom: 1px solid var(--steel);
+      height: 120px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px; position: relative; overflow: hidden;
+    }
+
+    .inkind-logo-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent, transparent 10px,
+        rgba(255,255,255,0.015) 10px, rgba(255,255,255,0.015) 11px
+      );
+    }
+
+    .inkind-logo-wrap img {
+      max-width: 80%; max-height: 90px;
+      object-fit: contain; position: relative; z-index: 1;
+    }
+
+    .inkind-card-info {
+      padding: 0.75rem 1rem 1rem;
+    }
+
+    .inkind-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.03em;
+      margin-bottom: 4px;
+    }
+
+    .inkind-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--steel);
+      color: var(--muted);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 2px 8px; border-radius: 3px;
+      margin-top: 4px;
+    }
+
+    /* ── Divider ── */
+    .sponsor-divider {
+      border: none;
+      border-top: 1px solid var(--steel);
+      margin: 3rem 0;
+    }
+
+    /* ── CTA strip ── */
+    .sponsor-cta {
+      background: var(--mid);
+      border: 1px solid rgba(46,204,90,0.25);
+      border-left: 4px solid var(--green);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+      display: flex; align-items: center;
+      gap: 2rem; flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .sponsor-cta-text h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 800; text-transform: uppercase;
+    }
+
+    .sponsor-cta-text p {
+      font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.6;
+    }
+
+    /* ── Intro note ── */
+    .sponsor-intro {
+      background: var(--mid);
+      border: 1px solid var(--steel);
+      border-radius: 8px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 3rem;
+      font-size: 14px; color: var(--muted); line-height: 1.75;
+    }
+
+    .sponsor-intro strong { color: var(--white); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace Logo"
+      style="height:58px; width:auto; filter: drop-shadow(0 0 6px rgba(46,204,90,0.4));">
+  </a>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">The Shop</a></li>
+    <li><a href="expertise.html">Expertise</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="visit.html">Visit</a></li>
+    <li><a href="livestream.html">Live Cam</a></li>
+    <li><a href="sponsors.html">Sponsors</a></li>
+    <li><a href="contact-member.html">Contact</a></li>
+    <li><a href="membership.html" class="nav-cta">Join Now →</a></li>
+  </ul>
+  <button class="nav-hamburger" id="nav-burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-content">
+
+  <div class="page-hero" style="position:relative;">
+    <div class="page-hero-inner">
+      <img src="assets/AMS-Green-Logo.png" alt="Anchorage Makerspace"
+        style="position:absolute; top:1.25rem; right:2rem; height:225px; width:auto;
+          opacity:0.82; filter:drop-shadow(0 0 14px rgba(46,204,90,0.45));
+          pointer-events:none; z-index:1;">
+      <div class="section-label">Community Partners</div>
+      <h1>Our <em>Sponsors</em></h1>
+      <p>The Anchorage Makerspace acknowledges the following sponsors for their tremendous support in fulfilling our mission. All corporate level sponsorships are tax-exempt.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-inner">
+
+      <div class="sponsor-intro">
+        <strong>Thank you to everyone who supports AMS.</strong> Sponsor revenue helps us reduce membership costs and keep the shop open for all of Anchorage.
+        For information on becoming a sponsor, email us at
+        <a href="mailto:info@anchoragemakerspace.com" style="color:var(--green);">info@anchoragemakerspace.com</a>
+        or visit the <a href="contact-sponsor.html" style="color:var(--green);">sponsorship page →</a>
+      </div>
+
+      <!-- ── Corporate Sponsors ── -->
+      <div class="sponsor-section-title">Corporate Sponsors</div>
+      <div class="sponsor-section-sub">Inventor Level</div>
+
+      <div class="sponsor-grid">
+
+        <div class="sponsor-card">
+          <div class="sponsor-logo-wrap">
+            <!-- Replace the lines below with: <img src="assets/sponsors/eterra.jpg" alt="eTerra"> -->
+            <span class="logo-ph-icon">🏢</span>
+            <span class="logo-ph-label">Logo coming soon</span>
+            <span class="photo-tag">📷 Placeholder</span>
+          </div>
+          <div class="sponsor-card-info">
+            <div class="sponsor-name">eTerra</div>
+            <span class="sponsor-tier-badge">✦ Inventor</span>
+          </div>
+        </div>
+
+        <div class="sponsor-card">
+          <div class="sponsor-logo-wrap">
+            <!-- Replace with: <img src="assets/sponsors/justlawns.jpg" alt="Just Lawns"> -->
+            <span class="logo-ph-icon">🌿</span>
+            <span class="logo-ph-label">Logo coming soon</span>
+            <span class="photo-tag">📷 Placeholder</span>
+          </div>
+          <div class="sponsor-card-info">
+            <div class="sponsor-name">Just Lawns</div>
+            <span class="sponsor-tier-badge">✦ Inventor</span>
+          </div>
+        </div>
+
+        <div class="sponsor-card">
+          <div class="sponsor-logo-wrap">
+            <!-- Replace with: <img src="assets/sponsors/bright-solutions.jpg" alt="Bright Solutions"> -->
+            <span class="logo-ph-icon">💡</span>
+            <span class="logo-ph-label">Logo coming soon</span>
+            <span class="photo-tag">📷 Placeholder</span>
+          </div>
+          <div class="sponsor-card-info">
+            <div class="sponsor-name">Bright Solutions</div>
+            <span class="sponsor-tier-badge">✦ Inventor</span>
+          </div>
+        </div>
+
+      </div>
+
+      <hr class="sponsor-divider">
+
+      <!-- ── In-Kind Sponsors ── -->
+      <div class="sponsor-section-title">In-Kind Sponsors</div>
+      <div class="sponsor-section-sub">Equipment &amp; Materials Support</div>
+
+      <div class="inkind-grid">
+
+        <div class="inkind-card">
+          <div class="inkind-logo-wrap">
+            <!-- Replace with: <img src="assets/sponsors/irobot.jpg" alt="iRobot"> -->
+            <span class="logo-ph-icon">🤖</span>
+            <span class="logo-ph-label">Logo coming soon</span>
+            <span class="photo-tag">📷 Placeholder</span>
+          </div>
+          <div class="inkind-card-info">
+            <div class="inkind-name">iRobot</div>
+            <span class="inkind-badge">In-Kind</span>
+          </div>
+        </div>
+
+        <div class="inkind-card">
+          <div class="inkind-logo-wrap">
+            <!-- Replace with: <img src="assets/sponsors/lowes.jpg" alt="Lowe's"> -->
+            <span class="logo-ph-icon">🔨</span>
+            <span class="logo-ph-label">Logo coming soon</span>
+            <span class="photo-tag">📷 Placeholder</span>
+          </div>
+          <div class="inkind-card-info">
+            <div class="inkind-name">Lowe's</div>
+            <span class="inkind-badge">In-Kind</span>
+          </div>
+        </div>
+
+        <div class="inkind-card">
+          <div class="inkind-logo-wrap">
+            <!-- Replace with: <img src="assets/sponsors/homedepot.jpg" alt="The Home Depot"> -->
+            <span class="logo-ph-icon">🏠</span>
+            <span class="logo-ph-label">Logo coming soon</span>
+            <span class="photo-tag">📷 Placeholder</span>
+          </div>
+          <div class="inkind-card-info">
+            <div class="inkind-name">The Home Depot</div>
+            <span class="inkind-badge">In-Kind</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── CTA ── -->
+      <div class="sponsor-cta">
+        <div style="font-size:2rem;">🤝</div>
+        <div class="sponsor-cta-text">
+          <h3>Become a Sponsor</h3>
+          <p>Support Anchorage's only community makerspace. Your sponsorship keeps tools running, classes affordable, and the maker community growing. All corporate sponsorships are tax-exempt.</p>
+        </div>
+        <a href="contact-sponsor.html" class="btn-primary">Get In Touch →</a>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 Anchorage Makerspace · Community Research and Development Workspace</p>
+  <p style="margin-top:6px;">1406 W 33rd Ave Unit F, Anchorage AK 99503 · <a href="mailto:info@anchoragemakerspace.com">info@anchoragemakerspace.com</a></p>
+  <p style="margin-top:6px;">
+    <a href="visit.html">Visit</a> · <a href="membership.html">Join</a> · <a href="sponsors.html">Sponsors</a> · <a href="livestream.html">Live Cam</a> · <a href="contact-member.html">Contact</a> · <a href="https://www.anchoragemakerspace.com/donate/">Donate</a>
+  </p>
+</footer>
+
+<script src="assets/nav.js"></script>
+</body>
+</html>
